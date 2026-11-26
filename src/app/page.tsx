@@ -58,29 +58,29 @@ export default function Home() {
         {/* Page header */}
         <header className="mb-6 sm:mb-8 flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
-            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">Operations Dashboard</h1>
-            <p className="text-white/40 mt-1 text-sm">
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight">Operations Dashboard</h1>
+            <p className="text-slate-400 mt-1 text-sm">
               Real-time status of your MikroTik infrastructure.
             </p>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             {/* Online / offline pills */}
-            <span className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+            <span className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               {online} Online
             </span>
-            <span className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400">
+            <span className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full bg-rose-50 border border-rose-200 text-rose-500">
               <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
               {offline} Offline
             </span>
 
             {/* View toggle */}
-            <div className="flex gap-1 bg-white/5 p-1 rounded-xl border border-white/5">
+            <div className="flex gap-1 bg-slate-100 p-1 rounded-xl border border-slate-200/50">
               <button
                 onClick={() => setView('grid')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
-                  view === 'grid' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white'
+                  view === 'grid' ? 'bg-slate-100/80 text-slate-800' : 'text-slate-400 hover:text-slate-700'
                 }`}
               >
                 <LayoutGrid size={13} /> Grid
@@ -88,7 +88,7 @@ export default function Home() {
               <button
                 onClick={() => setView('list')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
-                  view === 'list' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white'
+                  view === 'list' ? 'bg-slate-100/80 text-slate-800' : 'text-slate-400 hover:text-slate-700'
                 }`}
               >
                 <List size={13} /> List
@@ -112,33 +112,33 @@ export default function Home() {
           {/* Add Router card */}
           <button
             onClick={() => setIsProvisionModalOpen(true)}
-            className="h-full min-h-[240px] border-2 border-dashed border-white/5 rounded-2xl flex flex-col
-              items-center justify-center gap-4 group hover:border-blue-500/30 transition-all hover:bg-blue-500/[0.02]"
+            className="h-full min-h-[240px] border-2 border-dashed border-slate-200 rounded-2xl flex flex-col
+              items-center justify-center gap-4 group hover:border-teal-300 transition-all hover:bg-teal-50/30"
           >
-            <div className="p-4 bg-white/5 rounded-2xl group-hover:bg-blue-500/10 transition-colors">
-              <Zap className="text-white/20 group-hover:text-blue-400 transition-colors" size={28} />
+            <div className="p-4 bg-slate-100 rounded-2xl group-hover:bg-teal-50 transition-colors">
+              <Zap className="text-slate-300 group-hover:text-teal-600 transition-colors" size={28} />
             </div>
             <div className="text-center">
-              <span className="block text-white font-semibold">Provision New Router</span>
-              <span className="text-xs text-white/20">Generate &quot;One-Click&quot; onboarding script</span>
+              <span className="block text-slate-800 font-semibold">Provision New Router</span>
+              <span className="text-xs text-slate-300">Generate &quot;One-Click&quot; onboarding script</span>
             </div>
           </button>
         </section>
 
         {/* Security banner */}
-        <section className="mt-10 p-6 glass-card border-blue-500/20 bg-blue-500/[0.02] flex items-center justify-between gap-4">
+        <section className="mt-10 p-6 glass-card border-teal-200 bg-teal-50/50 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="p-3 bg-blue-500/10 text-blue-500 rounded-xl shrink-0">
+            <div className="p-3 bg-teal-50 text-teal-600 rounded-xl shrink-0">
               <Shield size={22} />
             </div>
             <div>
-              <h4 className="font-bold text-white">Zero-Exposure Security Active</h4>
-              <p className="text-sm text-white/40 mt-0.5">
+              <h4 className="font-bold text-slate-800">Zero-Exposure Security Active</h4>
+              <p className="text-sm text-slate-400 mt-0.5">
                 All routers communicate via encrypted WireGuard tunnels. Public API ports (8728/8729) are closed.
               </p>
             </div>
           </div>
-          <button className="px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-blue-600/20 shrink-0">
+          <button className="px-5 py-2 bg-teal-500 hover:bg-teal-400 text-slate-800 rounded-xl text-sm font-bold transition-all shadow-lg shadow-teal-500/20 shrink-0">
             Tunnel Health
           </button>
         </section>

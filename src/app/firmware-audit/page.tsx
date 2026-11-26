@@ -29,9 +29,9 @@ const ROUTERS = [
 ];
 
 const STATUS_META: Record<FwStatus, { label: string; color: string; bg: string; border: string; icon: React.ElementType }> = {
-  current:  { label: 'Up to date', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', icon: CheckCircle },
-  outdated: { label: 'Outdated',   color: 'text-amber-400',   bg: 'bg-amber-500/10',   border: 'border-amber-500/20',   icon: AlertTriangle },
-  critical: { label: 'Critical',   color: 'text-red-400',     bg: 'bg-red-500/10',     border: 'border-red-500/20',     icon: XCircle },
+  current:  { label: 'Up to date', color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200', icon: CheckCircle },
+  outdated: { label: 'Outdated',   color: 'text-amber-600',   bg: 'bg-amber-50',   border: 'border-amber-200',   icon: AlertTriangle },
+  critical: { label: 'Critical',   color: 'text-rose-500',     bg: 'bg-rose-50',     border: 'border-rose-200',     icon: XCircle },
 };
 
 // ── Page ───────────────────────────────────────────────────────────────────
@@ -84,12 +84,12 @@ export default function FirmwareAuditPage() {
 
         {/* Header */}
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 sm:gap-3">
-            <Cpu className="text-blue-400 shrink-0" size={20} /> Firmware Auditor
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2 sm:gap-3">
+            <Cpu className="text-teal-600 shrink-0" size={20} /> Firmware Auditor
           </h1>
-          <p className="text-white/40 mt-1 text-sm">
+          <p className="text-slate-400 mt-1 text-sm">
             Identify routers running outdated or vulnerable RouterOS versions.
-            Latest stable: <span className="text-emerald-400 font-mono">{LATEST_STABLE}</span>
+            Latest stable: <span className="text-emerald-600 font-mono">{LATEST_STABLE}</span>
           </p>
         </div>
 
@@ -104,14 +104,14 @@ export default function FirmwareAuditPage() {
                 whileHover={{ y: -2 }}
                 onClick={() => setFilterState(prev => prev === s ? 'all' : s)}
                 className={`glass-card p-5 text-left transition-all border ${
-                  filterState === s ? m.border + ' ' + m.bg : 'border-white/5'
+                  filterState === s ? m.border + ' ' + m.bg : 'border-slate-200/50'
                 }`}
               >
                 <div className="flex justify-between items-start">
                   <div>
-                    <p className="text-[10px] text-white/40 uppercase tracking-widest mb-1">{m.label}</p>
+                    <p className="text-[10px] text-slate-400 uppercase tracking-widest mb-1">{m.label}</p>
                     <p className={`text-3xl font-black ${m.color}`}>{counts[s]}</p>
-                    <p className="text-xs text-white/30 mt-0.5">router{counts[s] !== 1 ? 's' : ''}</p>
+                    <p className="text-xs text-slate-400 mt-0.5">router{counts[s] !== 1 ? 's' : ''}</p>
                   </div>
                   <div className={`p-2.5 rounded-xl ${m.bg}`}>
                     <Icon size={18} className={m.color} />
@@ -124,16 +124,16 @@ export default function FirmwareAuditPage() {
 
         {/* Toolbar */}
         <div className="flex flex-wrap items-center gap-3 mb-4">
-          <div className="flex items-center gap-2 bg-white/5 rounded-xl px-3 py-2 border border-white/10">
-            <span className="text-xs text-white/40">Org:</span>
+          <div className="flex items-center gap-2 bg-slate-100 rounded-xl px-3 py-2 border border-slate-200/60">
+            <span className="text-xs text-slate-400">Org:</span>
             <select
               value={filterOrg}
               onChange={e => setFilterOrg(e.target.value)}
-              className="bg-transparent text-sm text-white focus:outline-none cursor-pointer"
+              className="bg-transparent text-sm text-slate-800 focus:outline-none cursor-pointer"
             >
-              {orgs.map(o => <option key={o} value={o} className="bg-zinc-900">{o}</option>)}
+              {orgs.map(o => <option key={o} value={o} className="bg-white">{o}</option>)}
             </select>
-            <ChevronDown size={12} className="text-white/30" />
+            <ChevronDown size={12} className="text-slate-400" />
           </div>
 
           {selected.size > 0 && (
@@ -141,13 +141,13 @@ export default function FirmwareAuditPage() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               onClick={() => pushUpdate([...selected])}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-blue-600/20"
+              className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-400 text-white text-sm font-bold rounded-xl transition-all shadow-lg shadow-teal-500/20"
             >
               <RefreshCw size={14} /> Update {selected.size} selected
             </motion.button>
           )}
 
-          <span className="text-xs text-white/30 ml-auto">{visible.length} router{visible.length !== 1 ? 's' : ''}</span>
+          <span className="text-xs text-slate-400 ml-auto">{visible.length} router{visible.length !== 1 ? 's' : ''}</span>
         </div>
 
         {/* Table */}
@@ -155,13 +155,13 @@ export default function FirmwareAuditPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[640px]">
             <thead>
-              <tr className="border-b border-white/5 text-[10px] text-white/30 uppercase tracking-widest">
+              <tr className="border-b border-slate-200/50 text-[10px] text-slate-400 uppercase tracking-widest">
                 <th className="px-4 py-3 text-left w-8">
                   <input
                     type="checkbox"
                     checked={selected.size === visible.length && visible.length > 0}
                     onChange={toggleAll}
-                    className="accent-blue-500 cursor-pointer"
+                    className="accent-teal-500 cursor-pointer"
                   />
                 </th>
                 <th className="px-4 py-3 text-left">Router</th>
@@ -172,7 +172,7 @@ export default function FirmwareAuditPage() {
                 <th className="px-4 py-3 text-left">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-slate-100">
               {visible.map(router => {
                 const status = updated.has(router.id) ? 'current' : classify(router.firmware);
                 const m       = STATUS_META[status];
@@ -184,23 +184,23 @@ export default function FirmwareAuditPage() {
                   <motion.tr
                     key={router.id}
                     layout
-                    className="hover:bg-white/[0.02] transition-colors"
+                    className="hover:bg-teal-50/30 transition-colors"
                   >
                     <td className="px-4 py-3">
                       <input
                         type="checkbox"
                         checked={selected.has(router.id)}
                         onChange={() => toggle(router.id)}
-                        className="accent-blue-500 cursor-pointer"
+                        className="accent-teal-500 cursor-pointer"
                       />
                     </td>
                     <td className="px-4 py-3">
-                      <p className="font-semibold text-white">{router.name}</p>
-                      <p className="text-[10px] text-white/30 font-mono">{router.id}</p>
+                      <p className="font-semibold text-slate-800">{router.name}</p>
+                      <p className="text-[10px] text-slate-400 font-mono">{router.id}</p>
                     </td>
-                    <td className="px-4 py-3 text-white/50 font-mono text-xs">{router.model}</td>
-                    <td className="px-4 py-3 text-white/50 text-xs">{router.org}</td>
-                    <td className="px-4 py-3 font-mono text-sm text-white/80">{fw}</td>
+                    <td className="px-4 py-3 text-slate-500 font-mono text-xs">{router.model}</td>
+                    <td className="px-4 py-3 text-slate-500 text-xs">{router.org}</td>
+                    <td className="px-4 py-3 font-mono text-sm text-slate-800/80">{fw}</td>
                     <td className="px-4 py-3">
                       <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border ${m.bg} ${m.border} ${m.color}`}>
                         <Icon size={11} /> {m.label}
@@ -211,13 +211,13 @@ export default function FirmwareAuditPage() {
                         <button
                           onClick={() => pushUpdate([router.id])}
                           disabled={isUpd}
-                          className="flex items-center gap-1.5 px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs text-white/60 hover:text-white transition-all disabled:opacity-40"
+                          className="flex items-center gap-1.5 px-3 py-1 bg-slate-100 hover:bg-slate-100/80 border border-slate-200/60 rounded-lg text-xs text-slate-500 hover:text-slate-700 transition-all disabled:opacity-40"
                         >
                           <RefreshCw size={11} className={isUpd ? 'animate-spin' : ''} />
                           {isUpd ? 'Updating…' : `→ ${LATEST_STABLE}`}
                         </button>
                       ) : (
-                        <span className="text-xs text-white/20">—</span>
+                        <span className="text-xs text-slate-300">—</span>
                       )}
                     </td>
                   </motion.tr>

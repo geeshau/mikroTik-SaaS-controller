@@ -84,10 +84,10 @@ export default function BulkPushPage() {
     <AppShell>
       <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 sm:gap-3">
-            <GitMerge className="text-blue-400 shrink-0" size={20} /> Bulk Push
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2 sm:gap-3">
+            <GitMerge className="text-teal-600 shrink-0" size={20} /> Bulk Push
           </h1>
-          <p className="text-white/40 mt-1 text-sm">Select routers, choose an action, preview and execute.</p>
+          <p className="text-slate-400 mt-1 text-sm">Select routers, choose an action, preview and execute.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-6">
@@ -96,15 +96,15 @@ export default function BulkPushPage() {
           <div className="space-y-5">
             {/* Router list */}
             <div className="glass-card overflow-hidden">
-              <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between">
-                <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                  <CheckSquare size={14} className="text-blue-400" /> Select Routers
+              <div className="px-5 py-3 border-b border-slate-200/50 flex items-center justify-between">
+                <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <CheckSquare size={14} className="text-teal-600" /> Select Routers
                 </h2>
-                <button onClick={toggleAll} className="text-xs text-blue-400 hover:text-blue-300 transition-colors">
+                <button onClick={toggleAll} className="text-xs text-teal-600 hover:text-teal-500 transition-colors">
                   {selected.size === online.length ? 'Deselect all' : 'Select all online'}
                 </button>
               </div>
-              <ul className="divide-y divide-white/5">
+              <ul className="divide-y divide-slate-100">
                 {ALL_ROUTERS.map(r => {
                   const isOnline  = r.status === 'online';
                   const isChecked = selected.has(r.id);
@@ -113,18 +113,18 @@ export default function BulkPushPage() {
                       key={r.id}
                       onClick={() => isOnline && toggle(r.id)}
                       className={`flex items-center gap-4 px-5 py-3.5 transition-colors
-                        ${isOnline ? 'cursor-pointer hover:bg-white/[0.03]' : 'opacity-40 cursor-not-allowed'}
-                        ${isChecked ? 'bg-blue-500/[0.05]' : ''}`}
+                        ${isOnline ? 'cursor-pointer hover:bg-teal-50/30' : 'opacity-40 cursor-not-allowed'}
+                        ${isChecked ? 'bg-teal-50/40' : ''}`}
                     >
                       <input type="checkbox" checked={isChecked} readOnly disabled={!isOnline}
-                        className="accent-blue-500" />
+                        className="accent-teal-500" />
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-white">{r.name}</p>
-                        <p className="text-[11px] text-white/30 font-mono">{r.model} · {r.id}</p>
+                        <p className="text-sm font-medium text-slate-800">{r.name}</p>
+                        <p className="text-[11px] text-slate-400 font-mono">{r.model} · {r.id}</p>
                       </div>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border
-                        ${isOnline ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                                   : 'bg-red-500/10 border-red-500/20 text-red-400'}`}>
+                        ${isOnline ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                                   : 'bg-rose-50 border-rose-200 text-rose-500'}`}>
                         {r.status}
                       </span>
                     </li>
@@ -135,14 +135,14 @@ export default function BulkPushPage() {
 
             {/* Action selector */}
             <div className="glass-card p-5">
-              <h2 className="text-sm font-bold text-white mb-4">Choose Action</h2>
+              <h2 className="text-sm font-bold text-slate-800 mb-4">Choose Action</h2>
               <div className="grid grid-cols-2 gap-2 mb-5">
                 {ACTIONS.map(a => (
                   <button key={a.id} onClick={() => { setActionId(a.id); setArgs({}); }}
                     className={`text-left p-3 rounded-xl border text-sm transition-all
                       ${actionId === a.id
-                        ? 'bg-blue-600/15 border-blue-500/30 text-blue-400'
-                        : 'bg-white/5 border-white/10 text-white/60 hover:text-white hover:border-white/20'}`}>
+                        ? 'bg-teal-50 border-teal-300 text-teal-600'
+                        : 'bg-slate-100 border-slate-200/60 text-slate-500 hover:text-slate-700 hover:border-slate-300'}`}>
                     <p className="font-semibold">{a.label}</p>
                     <p className="text-[11px] opacity-60 mt-0.5 leading-tight">{a.description}</p>
                   </button>
@@ -152,12 +152,12 @@ export default function BulkPushPage() {
                 <div className="grid grid-cols-2 gap-3">
                   {action.fields.map(f => (
                     <div key={f.key}>
-                      <label className="block text-[11px] text-white/40 mb-1 uppercase tracking-wider">{f.label}</label>
+                      <label className="block text-[11px] text-slate-400 mb-1 uppercase tracking-wider">{f.label}</label>
                       <input type="text" value={args[f.key] ?? ''} placeholder={f.placeholder}
                         onChange={e => setArgs(p => ({ ...p, [f.key]: e.target.value }))}
-                        className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white
-                          focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all
-                          placeholder:text-white/20 font-mono" />
+                        className="w-full bg-slate-100 border border-slate-200/60 rounded-lg px-3 py-2 text-sm text-slate-800
+                          focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500 transition-all
+                          placeholder:text-slate-300 font-mono" />
                     </div>
                   ))}
                 </div>
@@ -168,22 +168,22 @@ export default function BulkPushPage() {
           {/* Right — preview + log */}
           <div className="space-y-5">
             <div className="glass-card p-5">
-              <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                <Terminal size={13} className="text-blue-400" /> Command Preview
+              <h2 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <Terminal size={13} className="text-teal-600" /> Command Preview
               </h2>
-              <pre className="bg-black/60 border border-white/5 rounded-xl p-4 text-[11px] text-emerald-400
+              <pre className="bg-slate-800 border border-slate-200/50 rounded-xl p-4 text-[11px] text-emerald-400
                 font-mono whitespace-pre-wrap break-all leading-relaxed">
                 {action.preview(args)}
               </pre>
-              <p className="mt-3 text-[10px] text-white/30">
-                Targets: <span className="text-white/60">{selected.size}</span> router{selected.size !== 1 ? 's' : ''}
-                {selected.size === 0 && <span className="text-amber-400/70 ml-2">← select at least one</span>}
+              <p className="mt-3 text-[10px] text-slate-400">
+                Targets: <span className="text-slate-500">{selected.size}</span> router{selected.size !== 1 ? 's' : ''}
+                {selected.size === 0 && <span className="text-amber-600/70 ml-2">← select at least one</span>}
               </p>
               <button
                 onClick={execute}
                 disabled={!selected.size || stage === 'running'}
-                className="mt-4 w-full py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl
-                  transition-all shadow-lg shadow-blue-600/20 disabled:opacity-40 disabled:cursor-not-allowed
+                className="mt-4 w-full py-3 bg-teal-500 hover:bg-teal-400 text-white font-bold rounded-xl
+                  transition-all shadow-lg shadow-teal-500/20 disabled:opacity-40 disabled:cursor-not-allowed
                   flex items-center justify-center gap-2"
               >
                 {stage === 'running'
@@ -198,26 +198,26 @@ export default function BulkPushPage() {
               {log.length > 0 && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
                   className="glass-card overflow-hidden">
-                  <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between">
-                    <h2 className="text-sm font-bold text-white">Execution Log</h2>
+                  <div className="px-5 py-3 border-b border-slate-200/50 flex items-center justify-between">
+                    <h2 className="text-sm font-bold text-slate-800">Execution Log</h2>
                     <button onClick={() => { setLog([]); setStage('idle'); }}
-                      className="text-white/30 hover:text-white transition-colors"><X size={14} /></button>
+                      className="text-slate-400 hover:text-slate-700 transition-colors"><X size={14} /></button>
                   </div>
-                  <ul className="divide-y divide-white/5 font-mono text-xs max-h-60 overflow-y-auto">
+                  <ul className="divide-y divide-slate-100 font-mono text-xs max-h-60 overflow-y-auto">
                     {log.map((line, i) => (
                       <motion.li key={i} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }}
                         className={`flex items-start gap-3 px-5 py-2.5
-                          ${line.ok ? 'text-emerald-400/80' : 'text-red-400/80'}`}>
+                          ${line.ok ? 'text-emerald-600/80' : 'text-rose-500/80'}`}>
                         {line.ok
-                          ? <CheckCircle size={11} className="shrink-0 mt-0.5 text-emerald-500" />
-                          : <X size={11} className="shrink-0 mt-0.5 text-red-500" />}
+                          ? <CheckCircle size={11} className="shrink-0 mt-0.5 text-emerald-600" />
+                          : <X size={11} className="shrink-0 mt-0.5 text-rose-500" />}
                         <div>
-                          <span className="text-white/30 mr-1.5">[{line.router}]</span>{line.msg}
+                          <span className="text-slate-400 mr-1.5">[{line.router}]</span>{line.msg}
                         </div>
                       </motion.li>
                     ))}
                     {stage === 'running' && (
-                      <li className="flex items-center gap-3 px-5 py-2.5 text-blue-400/60">
+                      <li className="flex items-center gap-3 px-5 py-2.5 text-teal-600/60">
                         <Loader2 size={11} className="animate-spin shrink-0" /> Processing…
                       </li>
                     )}

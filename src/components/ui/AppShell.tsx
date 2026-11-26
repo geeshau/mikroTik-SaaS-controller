@@ -28,30 +28,23 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const onlineSites = SITES.filter(s => s.status === 'online').length;
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
-  // Close the drawer whenever the route changes.
-  useEffect(() => {
-    setMobileNavOpen(false);
-  }, [pathname]);
+  useEffect(() => { setMobileNavOpen(false); }, [pathname]);
 
-  // Lock body scroll while the mobile drawer is open.
   useEffect(() => {
     document.body.style.overflow = mobileNavOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [mobileNavOpen]);
 
-  // Escape closes the drawer.
   useEffect(() => {
     if (!mobileNavOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setMobileNavOpen(false);
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMobileNavOpen(false); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [mobileNavOpen]);
 
   const navList = (
     <>
-      <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest px-3 py-2 mt-1">
+      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest px-3 py-2 mt-1">
         Management
       </p>
       {NAV.map(({ href, label, icon: Icon }) => {
@@ -64,15 +57,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             href={href}
             onClick={() => setMobileNavOpen(false)}
             aria-current={isActive ? 'page' : undefined}
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all border ${
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-[13.5px] font-semibold transition-all ${
               isActive
-                ? 'bg-blue-600/15 text-blue-400 border-blue-500/20'
-                : 'text-white/40 hover:text-white hover:bg-white/5 border-transparent'
+                ? 'bg-gradient-to-r from-teal-500 to-emerald-500 text-white shadow-lg shadow-teal-500/25'
+                : 'text-slate-500 hover:bg-slate-100/80 hover:text-slate-700'
             }`}
           >
             <Icon size={16} className="shrink-0" />
             {label}
-            {isActive && <ChevronRight size={12} className="ml-auto opacity-60" />}
+            {isActive && <ChevronRight size={12} className="ml-auto opacity-70" />}
           </Link>
         );
       })}
@@ -82,24 +75,26 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const sidebarFooter = (
     <>
       {/* Tunnel status */}
-      <div className="p-3 border-t border-white/5">
-        <div className="flex items-center gap-2 px-3 py-2.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
-          <Shield size={13} className="text-emerald-400 shrink-0" />
+      <div className="p-3 border-t border-slate-200/50">
+        <div className="flex items-center gap-2 px-3 py-2.5 bg-emerald-50 border border-emerald-200/60 rounded-xl">
+          <Shield size={13} className="text-emerald-600 shrink-0" />
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold text-emerald-400">Tunnels Active</p>
-            <p className="text-[10px] text-emerald-400/60">{onlineSites} / {SITES.length} sites online</p>
+            <p className="text-xs font-bold text-emerald-700">Tunnels Active</p>
+            <p className="text-[10px] text-emerald-600/60">{onlineSites} / {SITES.length} sites online</p>
           </div>
           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
         </div>
       </div>
 
       {/* User */}
-      <div className="p-3 border-t border-white/5">
+      <div className="p-3 border-t border-slate-200/50">
         <div className="flex items-center gap-3 px-3 py-2">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 shrink-0" />
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center text-white text-xs font-bold shadow shrink-0">
+            AU
+          </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-white truncate">Admin User</p>
-            <p className="text-[10px] text-white/30 truncate">admin@org.com</p>
+            <p className="text-xs font-semibold text-slate-700 truncate">Admin User</p>
+            <p className="text-[10px] text-slate-400 truncate">admin@org.com</p>
           </div>
         </div>
       </div>
@@ -107,15 +102,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <div className="min-h-screen bg-[#09090b] flex">
+    <div className="min-h-screen flex">
       {/* ── Desktop sidebar ── */}
-      <aside className="hidden lg:flex w-60 border-r border-white/5 flex-col fixed h-full z-40 bg-[#09090b]">
+      <aside className="hidden lg:flex w-64 flex-col fixed h-full z-40 bg-white/70 backdrop-blur-xl border-r border-white/40 shadow-[4px_0_24px_rgba(0,0,0,0.04)]">
         {/* Logo */}
-        <div className="h-16 flex items-center gap-3 px-5 border-b border-white/5 shrink-0">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-            <Zap className="text-white fill-white" size={15} />
+        <div className="h-16 flex items-center gap-3 px-6 border-b border-slate-200/50 shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center shadow-md">
+            <Zap className="text-white fill-white" size={16} />
           </div>
-          <span className="text-lg font-black tracking-tighter text-white">VORTEX</span>
+          <span className="text-lg font-extrabold tracking-tight text-slate-800">VORTEX</span>
         </div>
 
         {/* Nav */}
@@ -130,20 +125,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <button
             aria-label="Close navigation"
             onClick={() => setMobileNavOpen(false)}
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
           />
-          <aside className="absolute left-0 top-0 h-full w-[17rem] max-w-[85vw] bg-[#09090b] border-r border-white/10 flex flex-col shadow-2xl">
-            <div className="h-16 flex items-center justify-between gap-3 px-5 border-b border-white/5 shrink-0">
+          <aside className="absolute left-0 top-0 h-full w-64 max-w-[85vw] bg-white/90 backdrop-blur-xl border-r border-white/40 flex flex-col shadow-2xl">
+            <div className="h-16 flex items-center justify-between gap-3 px-6 border-b border-slate-200/50 shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-[0_0_20px_rgba(37,99,235,0.4)]">
-                  <Zap className="text-white fill-white" size={15} />
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center shadow-md">
+                  <Zap className="text-white fill-white" size={16} />
                 </div>
-                <span className="text-lg font-black tracking-tighter text-white">VORTEX</span>
+                <span className="text-lg font-extrabold tracking-tight text-slate-800">VORTEX</span>
               </div>
               <button
                 onClick={() => setMobileNavOpen(false)}
                 aria-label="Close navigation"
-                className="p-2 -mr-1 rounded-lg text-white/40 hover:text-white hover:bg-white/5 transition-colors"
+                className="p-2 -mr-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
               >
                 <X size={18} />
               </button>
@@ -157,14 +152,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       )}
 
       {/* Main content */}
-      <div className="flex-1 min-w-0 lg:ml-60 flex flex-col min-h-screen">
+      <div className="flex-1 min-w-0 lg:ml-64 flex flex-col min-h-screen">
         {/* Top Bar */}
-        <header className="h-16 border-b border-white/5 flex items-center gap-3 px-4 sm:px-6 lg:px-8 sticky top-0 bg-[#09090b]/90 backdrop-blur-xl z-30">
+        <header className="h-16 border-b border-white/40 flex items-center gap-3 px-4 sm:px-6 lg:px-8 sticky top-0 bg-white/60 backdrop-blur-xl z-30">
           {/* Hamburger — mobile only */}
           <button
             onClick={() => setMobileNavOpen(true)}
             aria-label="Open navigation"
-            className="lg:hidden p-2 -ml-1 rounded-lg text-white/60 hover:text-white hover:bg-white/5 transition-colors shrink-0"
+            className="lg:hidden p-2 -ml-1 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100/80 transition-colors shrink-0"
           >
             <Menu size={20} />
           </button>
@@ -175,10 +170,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             className="lg:hidden flex items-center gap-2 shrink-0"
             aria-label="Vortex home"
           >
-            <div className="w-7 h-7 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-teal-400 to-emerald-500 flex items-center justify-center">
               <Zap className="text-white fill-white" size={13} />
             </div>
-            <span className="text-base font-black tracking-tighter text-white hidden min-[380px]:inline">
+            <span className="text-base font-extrabold tracking-tight text-slate-800 hidden min-[380px]:inline">
               VORTEX
             </span>
           </Link>
@@ -186,13 +181,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex-1 min-w-0 max-w-md">
             <div className="relative group">
               <Search
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 transition-colors"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-teal-500 transition-colors"
                 size={15}
               />
               <input
                 type="text"
                 placeholder="Search sites, routers, circuits, MACs..."
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all placeholder:text-white/20 text-white"
+                className="w-full bg-white/60 border border-slate-200/60 rounded-xl py-2 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500 transition-all placeholder:text-slate-300 text-slate-700"
               />
             </div>
           </div>
@@ -200,10 +195,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           <div className="flex items-center gap-3 shrink-0">
             <button
               aria-label="Notifications"
-              className="p-2 text-white/40 hover:text-white transition-colors relative"
+              className="relative p-2 text-slate-400 hover:text-slate-700 transition-colors"
             >
               <Bell size={18} />
-              <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-red-500 rounded-full" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-400 rounded-full ring-2 ring-white" />
             </button>
           </div>
         </header>

@@ -51,14 +51,14 @@ export function SparklineChart({
     <div>
       {label && (
         <div className="flex justify-between items-center mb-2">
-          <span className="text-xs text-white/40">{label}</span>
+          <span className="text-xs text-slate-400">{label}</span>
           <div className="flex items-center gap-3">
-            <span className="text-[10px] text-white/20">
+            <span className="text-[10px] text-slate-300">
               peak {peak.toFixed(1)}{unit}
             </span>
-            <span className="text-sm font-bold text-white">
+            <span className="text-sm font-bold text-slate-800">
               {current.toFixed(1)}
-              <span className="text-white/40 text-xs ml-0.5">{unit}</span>
+              <span className="text-slate-400 text-xs ml-0.5">{unit}</span>
             </span>
           </div>
         </div>

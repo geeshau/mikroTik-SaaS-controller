@@ -62,12 +62,12 @@ export function WanSummaryStrip() {
   return (
     <section className="mb-8">
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-sm font-bold text-white/70 flex items-center gap-2">
-          <TrendingUp size={14} className="text-blue-400" /> Wide Area Network
+        <h2 className="text-sm font-bold text-slate-600 flex items-center gap-2">
+          <TrendingUp size={14} className="text-teal-600" /> Wide Area Network
         </h2>
         <Link
           href="/network"
-          className="flex items-center gap-1.5 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+          className="flex items-center gap-1.5 text-xs text-teal-600 hover:text-teal-500 transition-colors"
         >
           Open WAN console <ArrowRight size={12} />
         </Link>
@@ -83,15 +83,15 @@ export function WanSummaryStrip() {
           >
             <Link
               href="/network"
-              className="glass-card p-3 sm:p-4 flex items-start gap-2 sm:gap-3 hover:border-white/20 transition-all h-full"
+              className="glass-card p-3 sm:p-4 flex items-start gap-2 sm:gap-3 hover:border-slate-300 transition-all h-full"
             >
               <div className="p-2 rounded-lg shrink-0" style={{ background: `${color}22` }}>
                 <Icon size={14} style={{ color }} />
               </div>
               <div className="min-w-0">
-                <p className="text-[9px] text-white/35 uppercase tracking-widest">{label}</p>
-                <p className="text-base font-black text-white mt-0.5 truncate">{value}</p>
-                <p className="text-[10px] text-white/30 truncate">{sub}</p>
+                <p className="text-[9px] text-slate-400 uppercase tracking-widest">{label}</p>
+                <p className="text-base font-black text-slate-800 mt-0.5 truncate">{value}</p>
+                <p className="text-[10px] text-slate-400 truncate">{sub}</p>
               </div>
             </Link>
           </motion.div>
@@ -108,8 +108,8 @@ export function WanSummaryStrip() {
               href={`/sites/${site.id}`}
               className={`group flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-bold border transition-all ${
                 site.status === 'online'
-                  ? 'bg-emerald-500/[0.07] border-emerald-500/15 text-emerald-400/80 hover:bg-emerald-500/15'
-                  : 'bg-amber-500/[0.07] border-amber-500/15 text-amber-400/80 hover:bg-amber-500/15'
+                  ? 'bg-emerald-50 border-emerald-200 text-emerald-600/80 hover:bg-emerald-100'
+                  : 'bg-amber-50 border-amber-200 text-amber-600/80 hover:bg-amber-100'
               }`}
               title={`${site.name} — ${role.label}`}
             >

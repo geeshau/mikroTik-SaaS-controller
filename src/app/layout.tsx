@@ -27,7 +27,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${robotoMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-gradient-to-br from-[#eef9f4] via-[#f0f7f4] to-[#e8f4f0] text-slate-800">{children}</body>
     </html>
   );
 }

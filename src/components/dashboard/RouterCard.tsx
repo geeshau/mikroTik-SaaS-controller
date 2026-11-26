@@ -61,24 +61,24 @@ export const RouterCard = ({ router }: RouterCardProps) => {
   return (
     <motion.div
       whileHover={{ y: -4 }}
-      className="p-6 bg-zinc-900 rounded-2xl border border-white/5 hover:border-white/15
+      className="p-6 bg-white/65 backdrop-blur-xl rounded-2xl border border-white/50 hover:border-slate-300
         transition-colors shadow-2xl relative group"
     >
       {/* Header row */}
       <div className="flex justify-between items-start mb-5">
         <div className="flex gap-3 items-center">
-          <div className={`p-2.5 rounded-xl ${isOnline ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
+          <div className={`p-2.5 rounded-xl ${isOnline ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-500'}`}>
             <Router size={22} />
           </div>
           <div>
-            <h3 className="text-base font-semibold text-white leading-tight">{data.name}</h3>
-            <p className="text-[11px] text-white/30 mt-0.5 font-mono">{data.model} · {data.id}</p>
+            <h3 className="text-base font-semibold text-slate-800 leading-tight">{data.name}</h3>
+            <p className="text-[11px] text-slate-400 mt-0.5 font-mono">{data.model} · {data.id}</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/40 border border-white/5">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 border border-slate-200/50">
           <div className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'}`} />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-white/50">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500">
             {data.status}
           </span>
         </div>
@@ -97,8 +97,8 @@ export const RouterCard = ({ router }: RouterCardProps) => {
       </div>
 
       {/* Footer */}
-      <div className="mt-5 pt-5 border-t border-white/5 flex justify-between items-center">
-        <div className="flex items-center gap-1 text-xs text-white/25">
+      <div className="mt-5 pt-5 border-t border-slate-200/50 flex justify-between items-center">
+        <div className="flex items-center gap-1 text-xs text-slate-400">
           <Activity size={11} />
           <span>{data.lastSeen}</span>
         </div>
@@ -109,20 +109,20 @@ export const RouterCard = ({ router }: RouterCardProps) => {
             onClick={takeSnapshot}
             disabled={isTakingSnapshot}
             title="Take Config Snapshot"
-            className="p-1.5 text-white/25 hover:text-white transition-colors disabled:opacity-40"
+            className="p-1.5 text-slate-400 hover:text-slate-700 transition-colors disabled:opacity-40"
           >
             {isTakingSnapshot
               ? <Loader2 size={15} className="animate-spin" />
               : snapSaved
-              ? <Camera size={15} className="text-emerald-400" />
+              ? <Camera size={15} className="text-emerald-600" />
               : <Camera size={15} />}
           </button>
           <button title="Security Settings"
-            className="p-1.5 text-white/25 hover:text-white transition-colors">
+            className="p-1.5 text-slate-400 hover:text-slate-700 transition-colors">
             <Shield size={15} />
           </button>
           <button title="Wi-Fi Management"
-            className="p-1.5 text-white/25 hover:text-white transition-colors">
+            className="p-1.5 text-slate-400 hover:text-slate-700 transition-colors">
             <Wifi size={15} />
           </button>
 
@@ -130,7 +130,7 @@ export const RouterCard = ({ router }: RouterCardProps) => {
           <Link
             href={`/routers/${data.id}`}
             title="View Details"
-            className="p-1.5 text-white/25 hover:text-blue-400 transition-colors"
+            className="p-1.5 text-slate-400 hover:text-teal-600 transition-colors"
           >
             <ArrowRight size={15} />
           </Link>
