@@ -11,16 +11,16 @@ import { AppShell } from '@/components/ui/AppShell';
 
 // ── Mock audit events ───────────────────────────────────────────────────────
 const ACTION_META: Record<string, { icon: React.ElementType; color: string; label: string }> = {
-  snapshot_created:    { icon: Camera,    color: 'text-blue-400',    label: 'Snapshot'          },
-  firewall_rule_pushed:{ icon: Flame,     color: 'text-orange-400',  label: 'Firewall'          },
-  firmware_updated:    { icon: RefreshCw, color: 'text-emerald-400', label: 'Firmware Update'   },
-  device_blocked:      { icon: Wifi,      color: 'text-red-400',     label: 'Device Blocked'    },
-  bulk_push:           { icon: GitMerge,  color: 'text-purple-400',  label: 'Bulk Push'         },
-  wifi_changed:        { icon: Wifi,      color: 'text-sky-400',     label: 'Wi-Fi Changed'     },
-  hotspot_pushed:      { icon: Radio,     color: 'text-cyan-400',    label: 'Hotspot Pushed'    },
-  acl_rule_added:      { icon: ShieldCheck, color: 'text-emerald-400', label: 'ACL Rule Added'  },
-  acl_rule_removed:    { icon: Ban,       color: 'text-red-400',     label: 'ACL Rule Removed'  },
-  voucher_issued:      { icon: Ticket,    color: 'text-purple-400',  label: 'Voucher Issued'    },
+  snapshot_created:    { icon: Camera,    color: 'text-teal-600',    label: 'Snapshot'          },
+  firewall_rule_pushed:{ icon: Flame,     color: 'text-orange-600',  label: 'Firewall'          },
+  firmware_updated:    { icon: RefreshCw, color: 'text-emerald-600', label: 'Firmware Update'   },
+  device_blocked:      { icon: Wifi,      color: 'text-rose-500',     label: 'Device Blocked'    },
+  bulk_push:           { icon: GitMerge,  color: 'text-violet-600',  label: 'Bulk Push'         },
+  wifi_changed:        { icon: Wifi,      color: 'text-sky-600',     label: 'Wi-Fi Changed'     },
+  hotspot_pushed:      { icon: Radio,     color: 'text-cyan-600',    label: 'Hotspot Pushed'    },
+  acl_rule_added:      { icon: ShieldCheck, color: 'text-emerald-600', label: 'ACL Rule Added'  },
+  acl_rule_removed:    { icon: Ban,       color: 'text-rose-500',     label: 'ACL Rule Removed'  },
+  voucher_issued:      { icon: Ticket,    color: 'text-violet-600',  label: 'Voucher Issued'    },
 };
 
 const RAW_EVENTS = [
@@ -77,10 +77,10 @@ export default function AuditLogPage() {
 
         {/* Header */}
         <div className="mb-6 sm:mb-8">
-          <h1 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2 sm:gap-3">
-            <Activity className="text-blue-400 shrink-0" size={20} /> Audit Log
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2 sm:gap-3">
+            <Activity className="text-teal-600 shrink-0" size={20} /> Audit Log
           </h1>
-          <p className="text-white/40 mt-1 text-sm">
+          <p className="text-slate-400 mt-1 text-sm">
             Every write action is logged here — immutable record of all changes.
           </p>
         </div>
@@ -88,16 +88,16 @@ export default function AuditLogPage() {
         {/* Summary row */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
           {[
-            { label: 'Total Events', value: RAW_EVENTS.length, color: 'text-white',        icon: Activity    },
-            { label: 'Successful',   value: totals.ok,          color: 'text-emerald-400', icon: CheckCircle },
-            { label: 'Failed',       value: totals.fail,        color: 'text-red-400',      icon: AlertCircle },
+            { label: 'Total Events', value: RAW_EVENTS.length, color: 'text-slate-800',        icon: Activity    },
+            { label: 'Successful',   value: totals.ok,          color: 'text-emerald-600', icon: CheckCircle },
+            { label: 'Failed',       value: totals.fail,        color: 'text-rose-500',      icon: AlertCircle },
           ].map(({ label, value, color, icon: Icon }) => (
             <div key={label} className="glass-card p-3 sm:p-5 flex items-center gap-2 sm:gap-4">
-              <div className="p-2 sm:p-2.5 bg-white/5 rounded-xl shrink-0">
+              <div className="p-2 sm:p-2.5 bg-slate-100 rounded-xl shrink-0">
                 <Icon size={18} className={color} />
               </div>
               <div className="min-w-0">
-                <p className="text-[9px] sm:text-[10px] text-white/40 uppercase tracking-widest truncate">{label}</p>
+                <p className="text-[9px] sm:text-[10px] text-slate-400 uppercase tracking-widest truncate">{label}</p>
                 <p className={`text-xl sm:text-2xl font-black ${color}`}>{value}</p>
               </div>
             </div>
@@ -106,37 +106,37 @@ export default function AuditLogPage() {
 
         {/* Filters */}
         <div className="flex flex-wrap gap-3 mb-5">
-          <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl p-1">
+          <div className="flex items-center gap-1 bg-slate-100 border border-slate-200/60 rounded-xl p-1">
             {(['all', 'ok', 'fail'] as const).map(v => (
               <button key={v} onClick={() => { setShowOk(v); setPage(0); }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
                   showOk === v
-                    ? v === 'ok'   ? 'bg-emerald-500/20 text-emerald-400'
-                    : v === 'fail' ? 'bg-red-500/20 text-red-400'
-                    :                'bg-white/10 text-white'
-                    : 'text-white/30 hover:text-white'
+                    ? v === 'ok'   ? 'bg-emerald-100 text-emerald-600'
+                    : v === 'fail' ? 'bg-rose-100 text-rose-500'
+                    :                'bg-slate-100/80 text-slate-800'
+                    : 'text-slate-400 hover:text-slate-700'
                 }`}>
                 {v === 'all' ? 'All' : v === 'ok' ? '✓ Success' : '✗ Failed'}
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3 py-2">
-            <Filter size={12} className="text-white/30" />
+          <div className="flex items-center gap-2 bg-slate-100 border border-slate-200/60 rounded-xl px-3 py-2">
+            <Filter size={12} className="text-slate-400" />
             <select
               value={filter}
               onChange={e => { setFilter(e.target.value); setPage(0); }}
-              className="bg-transparent text-sm text-white focus:outline-none cursor-pointer"
+              className="bg-transparent text-sm text-slate-800 focus:outline-none cursor-pointer"
             >
               {ACTION_TYPES.map(t => (
-                <option key={t} value={t} className="bg-zinc-900">
+                <option key={t} value={t} className="bg-white">
                   {t === 'all' ? 'All actions' : ACTION_META[t]?.label ?? t}
                 </option>
               ))}
             </select>
           </div>
 
-          <span className="ml-auto text-xs text-white/30 self-center">
+          <span className="ml-auto text-xs text-slate-400 self-center">
             {filtered.length} event{filtered.length !== 1 ? 's' : ''}
           </span>
         </div>
@@ -146,7 +146,7 @@ export default function AuditLogPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[720px]">
             <thead>
-              <tr className="border-b border-white/5 text-[10px] text-white/30 uppercase tracking-widest">
+              <tr className="border-b border-slate-200/50 text-[10px] text-slate-400 uppercase tracking-widest">
                 <th className="px-5 py-3 text-left">Time</th>
                 <th className="px-5 py-3 text-left">Action</th>
                 <th className="px-5 py-3 text-left">Router</th>
@@ -155,9 +155,9 @@ export default function AuditLogPage() {
                 <th className="px-5 py-3 text-left">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-slate-100">
               {visible.map((event, i) => {
-                const meta = ACTION_META[event.action] ?? { icon: Activity, color: 'text-white/40', label: event.action };
+                const meta = ACTION_META[event.action] ?? { icon: Activity, color: 'text-slate-400', label: event.action };
                 const Icon = meta.icon;
                 return (
                   <motion.tr
@@ -165,9 +165,9 @@ export default function AuditLogPage() {
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.03 }}
-                    className="hover:bg-white/[0.02] transition-colors"
+                    className="hover:bg-teal-50/30 transition-colors"
                   >
-                    <td className="px-5 py-3 text-xs text-white/30 font-mono whitespace-nowrap">
+                    <td className="px-5 py-3 text-xs text-slate-400 font-mono whitespace-nowrap">
                       {fmtTs(event.ts)}
                     </td>
                     <td className="px-5 py-3">
@@ -175,15 +175,15 @@ export default function AuditLogPage() {
                         <Icon size={12} /> {meta.label}
                       </span>
                     </td>
-                    <td className="px-5 py-3 text-xs text-white/60">{event.router}</td>
-                    <td className="px-5 py-3 text-xs text-white/40 font-mono">{event.user}</td>
-                    <td className="px-5 py-3 text-xs text-white/50 max-w-[200px] truncate">{event.detail}</td>
+                    <td className="px-5 py-3 text-xs text-slate-500">{event.router}</td>
+                    <td className="px-5 py-3 text-xs text-slate-400 font-mono">{event.user}</td>
+                    <td className="px-5 py-3 text-xs text-slate-500 max-w-[200px] truncate">{event.detail}</td>
                     <td className="px-5 py-3">
                       {event.ok
-                        ? <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400">
+                        ? <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-600">
                             <CheckCircle size={11} /> OK
                           </span>
-                        : <span className="flex items-center gap-1 text-[11px] font-bold text-red-400">
+                        : <span className="flex items-center gap-1 text-[11px] font-bold text-rose-500">
                             <AlertCircle size={11} /> Failed
                           </span>
                       }
@@ -196,7 +196,7 @@ export default function AuditLogPage() {
           </div>
 
           {visible.length === 0 && (
-            <div className="py-12 text-center text-white/30 text-sm">No events match the current filter.</div>
+            <div className="py-12 text-center text-slate-400 text-sm">No events match the current filter.</div>
           )}
         </div>
 
@@ -209,8 +209,8 @@ export default function AuditLogPage() {
                 onClick={() => setPage(i)}
                 className={`w-8 h-8 rounded-lg text-sm font-bold transition-all ${
                   page === i
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white/5 text-white/40 hover:bg-white/10 hover:text-white'
+                    ? 'bg-teal-500 text-white'
+                    : 'bg-slate-100 text-slate-400 hover:bg-slate-100/80 hover:text-slate-700'
                 }`}
               >
                 {i + 1}

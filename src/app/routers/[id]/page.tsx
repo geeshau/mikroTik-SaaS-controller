@@ -146,37 +146,37 @@ export default function RouterDetailPage() {
       <div className="p-4 sm:p-6 lg:p-8 max-w-6xl mx-auto">
 
         {/* Breadcrumb */}
-        <div className="flex items-center gap-2 text-sm text-white/30 mb-6">
-          <Link href="/" className="hover:text-white transition-colors flex items-center gap-1.5">
+        <div className="flex items-center gap-2 text-sm text-slate-400 mb-6">
+          <Link href="/" className="hover:text-slate-700 transition-colors flex items-center gap-1.5">
             <ArrowLeft size={13} /> Dashboard
           </Link>
           <span>/</span>
-          <span className="text-white/60">{router.name}</span>
+          <span className="text-slate-500">{router.name}</span>
         </div>
 
         {/* Header */}
         <header className="flex flex-wrap items-start justify-between gap-4 mb-6 sm:mb-8">
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <div className={`p-3 sm:p-4 rounded-2xl shrink-0 ${isOnline ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
+            <div className={`p-3 sm:p-4 rounded-2xl shrink-0 ${isOnline ? 'bg-emerald-50 text-emerald-600' : 'bg-rose-50 text-rose-500'}`}>
               <Router size={24} className="sm:hidden" />
               <Router size={28} className="hidden sm:block" />
             </div>
             <div className="min-w-0">
-              <h1 className="text-xl sm:text-2xl font-bold text-white truncate">{router.name}</h1>
-              <p className="text-white/40 text-sm mt-0.5">{router.model} · {router.id}</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-slate-800 truncate">{router.name}</h1>
+              <p className="text-slate-400 text-sm mt-0.5">{router.model} · {router.id}</p>
               <div className="flex items-center gap-3 mt-2 flex-wrap">
                 <span className={`flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-full border ${
                   isOnline
-                    ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                    : 'bg-red-500/10 border-red-500/20 text-red-400'
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                    : 'bg-rose-50 border-rose-200 text-rose-500'
                 }`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'}`} />
                   {router.status.toUpperCase()}
                 </span>
-                <span className="text-xs text-white/30 flex items-center gap-1">
+                <span className="text-xs text-slate-400 flex items-center gap-1">
                   <Clock size={10} /> {router.uptime}
                 </span>
-                <span className="text-xs text-white/30 font-mono">
+                <span className="text-xs text-slate-400 font-mono">
                   {router.tunnelIp}
                 </span>
               </div>
@@ -187,14 +187,14 @@ export default function RouterDetailPage() {
             <button
               onClick={takeSnapshot}
               disabled={isTakingSnap || !isOnline}
-              className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm text-white/60 hover:text-white transition-all disabled:opacity-40 flex-1 sm:flex-none justify-center"
+              className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-100/80 border border-slate-200/60 rounded-xl text-sm text-slate-500 hover:text-slate-700 transition-all disabled:opacity-40 flex-1 sm:flex-none justify-center"
             >
               {snapSaved   ? <CheckCircle size={14} className="text-emerald-400" /> :
                isTakingSnap ? <RefreshCw size={14} className="animate-spin" /> :
                <Camera size={14} />}
               {snapSaved ? 'Saved!' : isTakingSnap ? 'Saving…' : 'Snapshot'}
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600/80 hover:bg-blue-600 rounded-xl text-sm text-white font-semibold transition-all flex-1 sm:flex-none justify-center">
+            <button className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-600 rounded-xl text-sm text-white font-semibold transition-all flex-1 sm:flex-none justify-center">
               <Wifi size={14} /> Manage Wi-Fi
             </button>
           </div>
@@ -210,32 +210,32 @@ export default function RouterDetailPage() {
           ].map(({ label, value, unit, icon: Icon, color }) => (
             <motion.div key={label} whileHover={{ y: -3 }} className="glass-card p-5">
               <div className="flex justify-between items-start mb-3">
-                <p className="text-[10px] text-white/40 uppercase tracking-widest">{label}</p>
+                <p className="text-[10px] text-slate-400 uppercase tracking-widest">{label}</p>
                 <div className="p-1.5 rounded-lg" style={{ background: `${color}22` }}>
                   <Icon size={13} style={{ color }} />
                 </div>
               </div>
-              <p className="text-2xl font-black text-white">
+              <p className="text-2xl font-black text-slate-800">
                 {value}
-                <span className="text-sm font-normal text-white/40 ml-1">{unit}</span>
+                <span className="text-sm font-normal text-slate-400 ml-1">{unit}</span>
               </p>
             </motion.div>
           ))}
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-0.5 border-b border-white/5 mb-6 overflow-x-auto no-scrollbar">
+        <div className="flex gap-0.5 border-b border-slate-200/50 mb-6 overflow-x-auto no-scrollbar">
           {TABS.map(({ key, label }) => (
             <button
               key={key}
               onClick={() => setTab(key)}
               className={`px-4 py-3 text-sm font-semibold transition-all relative whitespace-nowrap shrink-0 ${
-                tab === key ? 'text-white' : 'text-white/30 hover:text-white/60'
+                tab === key ? 'text-slate-800' : 'text-slate-400 hover:text-slate-500'
               }`}
             >
               {label}
               {tab === key && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 rounded-full" />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500 rounded-full" />
               )}
             </button>
           ))}
@@ -245,8 +245,8 @@ export default function RouterDetailPage() {
         {tab === 'overview' && (
           <div className="space-y-6">
             <div className="glass-card p-6">
-              <h2 className="text-sm font-bold text-white/60 uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Activity size={14} className="text-blue-400" /> Live Traffic
+              <h2 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <Activity size={14} className="text-teal-600" /> Live Traffic
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <SparklineChart data={rxData} color="#3b82f6" label="Download" unit=" Mbps" height={70} />
@@ -255,8 +255,8 @@ export default function RouterDetailPage() {
             </div>
 
             <div className="glass-card p-6">
-              <h2 className="text-sm font-bold text-white/60 uppercase tracking-wider mb-4 flex items-center gap-2">
-                <Server size={14} className="text-purple-400" /> System Info
+              <h2 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
+                <Server size={14} className="text-violet-600" /> System Info
               </h2>
               <dl className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {[
@@ -267,9 +267,9 @@ export default function RouterDetailPage() {
                   ['Uptime',      router.uptime],
                   ['Snapshots',   String(snapshots.length)],
                 ].map(([k, v]) => (
-                  <div key={k} className="bg-white/[0.03] rounded-xl p-3">
-                    <dt className="text-[10px] text-white/30 uppercase tracking-wider mb-0.5">{k}</dt>
-                    <dd className="text-sm font-semibold text-white font-mono">{v}</dd>
+                  <div key={k} className="bg-teal-50/30 rounded-xl p-3">
+                    <dt className="text-[10px] text-slate-400 uppercase tracking-wider mb-0.5">{k}</dt>
+                    <dd className="text-sm font-semibold text-slate-800 font-mono">{v}</dd>
                   </div>
                 ))}
               </dl>
@@ -288,7 +288,7 @@ export default function RouterDetailPage() {
             ].map(({ data, color, label, unit }) => (
               <div key={label} className="glass-card p-6">
                 <SparklineChart data={data} color={color} label={label} unit={unit} height={90} />
-                <div className="flex justify-between text-[10px] text-white/20 mt-1 px-1">
+                <div className="flex justify-between text-[10px] text-slate-300 mt-1 px-1">
                   <span>24h ago</span>
                   <span>Now</span>
                 </div>
@@ -302,18 +302,18 @@ export default function RouterDetailPage() {
           <div className="space-y-6">
             {/* Snapshot list */}
             <div className="glass-card overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-                <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                  <Camera size={14} className="text-blue-400" /> Config History
+              <div className="px-6 py-4 border-b border-slate-200/50 flex items-center justify-between">
+                <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                  <Camera size={14} className="text-teal-600" /> Config History
                 </h2>
-                <span className="text-[10px] text-white/30">Select two to compare</span>
+                <span className="text-[10px] text-slate-400">Select two to compare</span>
               </div>
-              <ul className="divide-y divide-white/5">
+              <ul className="divide-y divide-slate-100">
                 {snapshots.map((snap) => (
-                  <li key={snap.id} className="flex items-center justify-between px-6 py-3 hover:bg-white/[0.02] transition-colors">
+                  <li key={snap.id} className="flex items-center justify-between px-6 py-3 hover:bg-teal-50/30 transition-colors">
                     <div>
-                      <p className="text-sm text-white font-mono">{snap.id}</p>
-                      <p className="text-[11px] text-white/30 mt-0.5 flex items-center gap-1">
+                      <p className="text-sm text-slate-800 font-mono">{snap.id}</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1">
                         <Clock size={9} /> {fmtDate(snap.created_at)}
                       </p>
                     </div>
@@ -322,8 +322,8 @@ export default function RouterDetailPage() {
                         onClick={() => setSnapA(snap.id)}
                         className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
                           snapA === snap.id
-                            ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                            : 'bg-white/5 text-white/40 hover:text-white border border-transparent'
+                            ? 'bg-rose-50 text-rose-500 border border-rose-200'
+                            : 'bg-slate-100 text-slate-400 hover:text-slate-700 border border-transparent'
                         }`}
                       >
                         A
@@ -332,8 +332,8 @@ export default function RouterDetailPage() {
                         onClick={() => setSnapB(snap.id)}
                         className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
                           snapB === snap.id
-                            ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                            : 'bg-white/5 text-white/40 hover:text-white border border-transparent'
+                            ? 'bg-emerald-50 text-emerald-600 border border-emerald-200'
+                            : 'bg-slate-100 text-slate-400 hover:text-slate-700 border border-transparent'
                         }`}
                       >
                         B
@@ -347,9 +347,9 @@ export default function RouterDetailPage() {
             {/* Diff viewer */}
             {snapA !== snapB && (
               <div className="glass-card p-6">
-                <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                  <GitCompare size={14} className="text-blue-400" />
-                  Diff: <span className="text-red-400">{snapA}</span> → <span className="text-emerald-400">{snapB}</span>
+                <h2 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <GitCompare size={14} className="text-teal-600" />
+                  Diff: <span className="text-rose-500">{snapA}</span> → <span className="text-emerald-600">{snapB}</span>
                 </h2>
                 <SnapshotDiff
                   blobA={blobA as Record<string, unknown>}
@@ -365,18 +365,18 @@ export default function RouterDetailPage() {
         {/* ── Firewall ── */}
         {tab === 'firewall' && (
           <div className="glass-card overflow-hidden">
-            <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-              <h2 className="text-sm font-bold text-white flex items-center gap-2">
+            <div className="px-6 py-4 border-b border-slate-200/50 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                 <Flame size={14} className="text-orange-400" /> Active Firewall Rules
               </h2>
-              <button className="text-xs text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1.5">
+              <button className="text-xs text-teal-600 hover:text-teal-500 transition-colors flex items-center gap-1.5">
                 <Shield size={12} /> Push New Rule
               </button>
             </div>
             <div className="overflow-x-auto">
             <table className="w-full text-sm min-w-[560px]">
               <thead>
-                <tr className="text-[10px] text-white/30 uppercase tracking-widest border-b border-white/5">
+                <tr className="text-[10px] text-slate-400 uppercase tracking-widest border-b border-slate-200/50">
                   <th className="text-left px-6 py-3 font-semibold">Chain</th>
                   <th className="text-left px-6 py-3 font-semibold">Action</th>
                   <th className="text-left px-6 py-3 font-semibold">Source</th>
@@ -384,22 +384,22 @@ export default function RouterDetailPage() {
                   <th className="text-left px-6 py-3 font-semibold">Comment</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5">
+              <tbody className="divide-y divide-slate-100">
                 {FIREWALL_RULES.map((rule) => (
-                  <tr key={rule.id} className="hover:bg-white/[0.02] transition-colors">
-                    <td className="px-6 py-3 font-mono text-xs text-white/60">{rule.chain}</td>
+                  <tr key={rule.id} className="hover:bg-teal-50/30 transition-colors">
+                    <td className="px-6 py-3 font-mono text-xs text-slate-500">{rule.chain}</td>
                     <td className="px-6 py-3">
                       <span className={`px-2 py-0.5 rounded-md text-xs font-bold ${
                         rule.action === 'accept'
-                          ? 'bg-emerald-500/15 text-emerald-400'
-                          : 'bg-red-500/15 text-red-400'
+                          ? 'bg-emerald-50 text-emerald-600'
+                          : 'bg-rose-50 text-rose-500'
                       }`}>
                         {rule.action}
                       </span>
                     </td>
-                    <td className="px-6 py-3 font-mono text-xs text-white/50">{rule.src || '–'}</td>
-                    <td className="px-6 py-3 font-mono text-xs text-white/50">{rule.dst || '–'}</td>
-                    <td className="px-6 py-3 text-xs text-white/30">{rule.comment}</td>
+                    <td className="px-6 py-3 font-mono text-xs text-slate-500">{rule.src || '–'}</td>
+                    <td className="px-6 py-3 font-mono text-xs text-slate-500">{rule.dst || '–'}</td>
+                    <td className="px-6 py-3 text-xs text-slate-400">{rule.comment}</td>
                   </tr>
                 ))}
               </tbody>

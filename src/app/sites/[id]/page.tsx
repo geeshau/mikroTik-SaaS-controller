@@ -19,10 +19,10 @@ import {
 import { series, hashSeed } from '@/lib/prng';
 
 const STATE_META: Record<LinkState, { color: string; bg: string; border: string; label: string }> = {
-  active:   { label: 'Active',   color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20' },
-  standby:  { label: 'Standby',  color: 'text-blue-400',   bg: 'bg-blue-500/10',   border: 'border-blue-500/20'   },
-  degraded: { label: 'Degraded', color: 'text-amber-400',  bg: 'bg-amber-500/10',  border: 'border-amber-500/20'  },
-  down:     { label: 'Down',     color: 'text-red-400',    bg: 'bg-red-500/10',    border: 'border-red-500/20'    },
+  active:   { label: 'Active',   color: 'text-emerald-600', bg: 'bg-emerald-50', border: 'border-emerald-200' },
+  standby:  { label: 'Standby',  color: 'text-teal-600',   bg: 'bg-teal-50',   border: 'border-teal-200'   },
+  degraded: { label: 'Degraded', color: 'text-amber-600',  bg: 'bg-amber-50',  border: 'border-amber-200'  },
+  down:     { label: 'Down',     color: 'text-rose-500',    bg: 'bg-rose-50',    border: 'border-rose-200'    },
 };
 
 function fmtUptime(seconds: number) {
@@ -69,10 +69,10 @@ export default function SiteDetailPage() {
     return (
       <AppShell>
         <div className="p-8 max-w-3xl mx-auto text-center py-24">
-          <XCircle className="text-red-400 mx-auto mb-4" size={40} />
-          <h1 className="text-xl font-bold text-white">Site not found</h1>
-          <p className="text-white/40 text-sm mt-2">No site matches “{siteId}”.</p>
-          <Link href="/network" className="inline-flex items-center gap-2 mt-6 text-sm text-blue-400 hover:text-blue-300">
+          <XCircle className="text-rose-500 mx-auto mb-4" size={40} />
+          <h1 className="text-xl font-bold text-slate-800">Site not found</h1>
+          <p className="text-slate-400 text-sm mt-2">No site matches &ldquo;{siteId}&rdquo;.</p>
+          <Link href="/network" className="inline-flex items-center gap-2 mt-6 text-sm text-teal-600 hover:text-teal-500">
             <ArrowLeft size={14} /> Back to WAN
           </Link>
         </div>
@@ -115,31 +115,31 @@ export default function SiteDetailPage() {
       <div className="p-4 sm:p-6 lg:p-8 max-w-[1500px] mx-auto space-y-6 sm:space-y-8">
 
         {/* ── Breadcrumb ── */}
-        <div className="flex items-center gap-2 text-sm text-white/30">
-          <Link href="/network" className="hover:text-white transition-colors flex items-center gap-1.5">
+        <div className="flex items-center gap-2 text-sm text-slate-400">
+          <Link href="/network" className="hover:text-slate-700 transition-colors flex items-center gap-1.5">
             <ArrowLeft size={13} /> WAN
           </Link>
           <span>/</span>
-          <span className="text-white/60">{site.name}</span>
+          <span className="text-slate-500">{site.name}</span>
         </div>
 
         {/* ── Header ── */}
         <header className="flex flex-wrap items-start justify-between gap-6">
           <div className="flex items-start gap-4">
-            <div className="p-4 rounded-2xl bg-blue-500/10 text-blue-400">
+            <div className="p-4 rounded-2xl bg-teal-50 text-teal-600">
               <Building2 size={26} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white flex items-center gap-3 flex-wrap">
+              <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-3 flex-wrap">
                 {site.name}
                 <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${roleMeta.bg} ${roleMeta.border} ${roleMeta.color}`}>
                   {roleMeta.label}
                 </span>
               </h1>
-              <p className="text-white/40 text-sm mt-1 font-mono">
+              <p className="text-slate-400 text-sm mt-1 font-mono">
                 {site.code} · {site.city}, {site.country} · {site.timezone}
               </p>
-              <div className="flex items-center gap-4 mt-3 flex-wrap text-[11px] text-white/35">
+              <div className="flex items-center gap-4 mt-3 flex-wrap text-[11px] text-slate-400">
                 <span className="flex items-center gap-1.5">
                   <Globe2 size={11} /> {site.region}
                 </span>
@@ -157,10 +157,10 @@ export default function SiteDetailPage() {
           </div>
 
           <div className="flex gap-2">
-            <button className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-sm text-white/70 hover:text-white transition-all">
+            <button className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-100/80 border border-slate-200/60 rounded-xl text-sm text-slate-500 hover:text-slate-700 transition-all">
               <Settings2 size={14} /> Site Settings
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-600/80 hover:bg-blue-600 rounded-xl text-sm text-white font-semibold transition-all">
+            <button className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-600 rounded-xl text-sm text-white font-semibold transition-all">
               <Zap size={14} /> Push Template
             </button>
           </div>
@@ -183,33 +183,33 @@ export default function SiteDetailPage() {
               className="glass-card p-5"
             >
               <div className="flex items-center justify-between mb-3">
-                <p className="text-[10px] text-white/40 uppercase tracking-widest">{label}</p>
+                <p className="text-[10px] text-slate-400 uppercase tracking-widest">{label}</p>
                 <div className="p-1.5 rounded-lg" style={{ background: `${color}22` }}>
                   <Icon size={13} style={{ color }} />
                 </div>
               </div>
-              <p className="text-2xl font-black text-white">
+              <p className="text-2xl font-black text-slate-800">
                 {value}
-                {unit && <span className="text-sm font-normal text-white/40 ml-1">{unit}</span>}
+                {unit && <span className="text-sm font-normal text-slate-400 ml-1">{unit}</span>}
               </p>
-              <p className="text-[11px] text-white/30 mt-1">{sub}</p>
+              <p className="text-[11px] text-slate-400 mt-1">{sub}</p>
             </motion.div>
           ))}
         </div>
 
         {/* ── Tabs ── */}
-        <div className="flex gap-0.5 border-b border-white/5 overflow-x-auto no-scrollbar">
+        <div className="flex gap-0.5 border-b border-slate-200/50 overflow-x-auto no-scrollbar">
           {TABS.map(({ key, label }) => (
             <button
               key={key}
               onClick={() => setTab(key)}
               className={`px-4 py-3 text-sm font-semibold transition-all relative whitespace-nowrap shrink-0 ${
-                tab === key ? 'text-white' : 'text-white/30 hover:text-white/60'
+                tab === key ? 'text-slate-800' : 'text-slate-400 hover:text-slate-500'
               }`}
             >
               {label}
               {tab === key && (
-                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 rounded-full" />
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500 rounded-full" />
               )}
             </button>
           ))}
@@ -227,7 +227,7 @@ export default function SiteDetailPage() {
                   <motion.div
                     key={u.id}
                     layout
-                    className={`glass-card p-5 ${isActive ? 'border-blue-500/30' : ''}`}
+                    className={`glass-card p-5 ${isActive ? 'border-teal-300' : ''}`}
                   >
                     <div className="flex flex-wrap items-start justify-between gap-4 mb-4">
                       <div className="flex items-center gap-3">
@@ -238,15 +238,15 @@ export default function SiteDetailPage() {
                           <Radio size={17} style={{ color: UPLINK_TYPE_META[u.type].color }} />
                         </div>
                         <div>
-                          <p className="text-sm font-bold text-white flex items-center gap-2">
+                          <p className="text-sm font-bold text-slate-800 flex items-center gap-2">
                             {u.name}
                             {u.state === 'active' && (
-                              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-teal-50 text-teal-600 border border-teal-200">
                                 PRIMARY
                               </span>
                             )}
                           </p>
-                          <p className="text-[11px] text-white/30 mt-0.5">
+                          <p className="text-[11px] text-slate-400 mt-0.5">
                             {UPLINK_TYPE_META[u.type].label} · {u.provider}
                           </p>
                         </div>
@@ -260,7 +260,7 @@ export default function SiteDetailPage() {
                           <button
                             onClick={() => failoverTo(u)}
                             disabled={switching !== null}
-                            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-[11px] font-bold text-white/70 hover:text-white transition-all disabled:opacity-40"
+                            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-100/80 text-[11px] font-bold text-slate-500 hover:text-slate-700 transition-all disabled:opacity-40"
                           >
                             {switching === u.id
                               ? <><Loader2 size={11} className="animate-spin" /> Switching…</>
@@ -278,17 +278,17 @@ export default function SiteDetailPage() {
                         { label: 'Jitter',     value: `${u.jitterMs}`, unit: 'ms' },
                         { label: 'Loss',       value: u.lossPct.toFixed(1), unit: '%' },
                       ].map(x => (
-                        <div key={x.label} className="bg-black/20 rounded-lg p-2.5">
-                          <p className="text-[9px] text-white/30 uppercase tracking-wider">{x.label}</p>
-                          <p className={`text-xs font-bold text-white mt-0.5 truncate ${x.mono ? 'font-mono' : ''}`}>
+                        <div key={x.label} className="bg-slate-50 rounded-lg p-2.5">
+                          <p className="text-[9px] text-slate-400 uppercase tracking-wider">{x.label}</p>
+                          <p className={`text-xs font-bold text-slate-800 mt-0.5 truncate ${x.mono ? 'font-mono' : ''}`}>
                             {x.value}
-                            {x.unit && <span className="text-white/30 font-normal ml-0.5">{x.unit}</span>}
+                            {x.unit && <span className="text-slate-400 font-normal ml-0.5">{x.unit}</span>}
                           </p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="h-1.5 rounded-full bg-white/5 overflow-hidden mb-2">
+                    <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden mb-2">
                       <div
                         className="h-full rounded-full transition-all"
                         style={{
@@ -297,12 +297,12 @@ export default function SiteDetailPage() {
                         }}
                       />
                     </div>
-                    <p className="text-[10px] text-white/30">
+                    <p className="text-[10px] text-slate-400">
                       {u.utilizationPct}% of {u.downMbps} Mbps · ${u.monthlyCostUsd}/mo
                     </p>
 
                     {data.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-white/5">
+                      <div className="mt-4 pt-4 border-t border-slate-200/50">
                         <SparklineChart
                           data={data}
                           color={UPLINK_TYPE_META[u.type].color}
@@ -320,50 +320,50 @@ export default function SiteDetailPage() {
             {/* Side panel */}
             <div className="space-y-5">
               <div className="glass-card p-5">
-                <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                  <Route size={13} className="text-purple-400" /> Failover Chain
+                <h2 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <Route size={13} className="text-violet-600" /> Failover Chain
                 </h2>
                 <div className="space-y-2">
                   {[...uplinks].sort((a, b) => a.priority - b.priority).map((u, i, arr) => (
                     <div key={u.id} className="flex items-center gap-3">
                       <span
                         className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-black shrink-0 ${
-                          u.state === 'down' ? 'bg-red-500/15 text-red-400'
-                          : u.state === 'active' ? 'bg-emerald-500/15 text-emerald-400'
-                          : 'bg-white/5 text-white/40'
+                          u.state === 'down' ? 'bg-rose-50 text-rose-500'
+                          : u.state === 'active' ? 'bg-emerald-50 text-emerald-600'
+                          : 'bg-slate-100 text-slate-400'
                         }`}
                       >
                         {i + 1}
                       </span>
                       <div className="flex-1 min-w-0">
-                        <p className="text-xs font-semibold text-white truncate">{u.name}</p>
-                        <p className="text-[10px] text-white/30 font-mono">{u.downMbps} Mbps</p>
+                        <p className="text-xs font-semibold text-slate-800 truncate">{u.name}</p>
+                        <p className="text-[10px] text-slate-400 font-mono">{u.downMbps} Mbps</p>
                       </div>
                       <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded uppercase ${STATE_META[u.state].bg} ${STATE_META[u.state].color}`}>
                         {u.state}
                       </span>
                       {i < arr.length - 1 && (
-                        <ArrowDownLeft size={12} className="text-white/15 absolute" />
+                        <ArrowDownLeft size={12} className="text-slate-300 absolute" />
                       )}
                     </div>
                   ))}
                 </div>
-                <p className="text-[10px] text-white/25 mt-4 leading-relaxed">
+                <p className="text-[10px] text-slate-300 mt-4 leading-relaxed">
                   When the primary circuit fails, traffic is steered to the next healthy uplink in priority order.
                 </p>
               </div>
 
               <div className="glass-card p-5">
-                <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                  <Cpu size={13} className="text-amber-400" /> Site Load
+                <h2 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                  <Cpu size={13} className="text-amber-600" /> Site Load
                 </h2>
                 {site.devices.slice(0, 5).map(d => (
                   <div key={d.id} className="mb-3">
                     <div className="flex items-center justify-between text-[11px] mb-1">
-                      <span className="text-white/60">{d.name}</span>
-                      <span className="font-mono text-white/40">{d.cpuLoad}%</span>
+                      <span className="text-slate-500">{d.name}</span>
+                      <span className="font-mono text-slate-400">{d.cpuLoad}%</span>
                     </div>
-                    <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+                    <div className="h-1 rounded-full bg-slate-100 overflow-hidden">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -382,16 +382,16 @@ export default function SiteDetailPage() {
         {/* ── Policies ── */}
         {tab === 'policies' && (
           <div className="glass-card overflow-hidden">
-            <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-              <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                <ShieldCheck size={14} className="text-purple-400" /> Site Policy Routes
+            <div className="px-6 py-4 border-b border-slate-200/50 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <ShieldCheck size={14} className="text-violet-600" /> Site Policy Routes
               </h2>
-              <span className="text-[10px] text-white/30">{site.policies.length} rules</span>
+              <span className="text-[10px] text-slate-400">{site.policies.length} rules</span>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[860px]">
                 <thead>
-                  <tr className="text-[10px] text-white/30 uppercase tracking-widest border-b border-white/5">
+                  <tr className="text-[10px] text-slate-400 uppercase tracking-widest border-b border-slate-200/50">
                     <th className="text-left px-6 py-3 font-semibold">Policy</th>
                     <th className="text-left px-4 py-3 font-semibold">Match</th>
                     <th className="text-left px-4 py-3 font-semibold">Class</th>
@@ -401,7 +401,7 @@ export default function SiteDetailPage() {
                     <th className="text-right px-6 py-3 font-semibold">State</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-slate-100">
                   {site.policies.map(p => {
                     const enabled = policyState[p.id] ?? p.enabled;
                     const mode = MODE_META[p.mode];
@@ -410,11 +410,11 @@ export default function SiteDetailPage() {
                       .map(id => site.uplinks.find(u => u.id === id))
                       .filter(Boolean) as Uplink[];
                     return (
-                      <tr key={p.id} className={`transition-colors ${enabled ? 'hover:bg-white/[0.02]' : 'opacity-45'}`}>
-                        <td className="px-6 py-3 text-white font-medium">{p.name}</td>
+                      <tr key={p.id} className={`transition-colors ${enabled ? 'hover:bg-teal-50/30' : 'opacity-45'}`}>
+                        <td className="px-6 py-3 text-slate-800 font-medium">{p.name}</td>
                         <td className="px-4 py-3">
-                          <span className="text-[10px] text-white/30 uppercase tracking-wider block">{p.matchType}</span>
-                          <span className="text-xs text-white/60 font-mono">{p.matchValue}</span>
+                          <span className="text-[10px] text-slate-400 uppercase tracking-wider block">{p.matchType}</span>
+                          <span className="text-xs text-slate-500 font-mono">{p.matchValue}</span>
                         </td>
                         <td className="px-4 py-3">
                           <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${app.bg} ${app.border} ${app.color}`}>
@@ -425,11 +425,11 @@ export default function SiteDetailPage() {
                           <span className="flex items-center gap-1.5">
                             {uplinks.map((u, i) => (
                               <span key={u.id} className="flex items-center gap-1">
-                                {i > 0 && <ArrowRight size={10} className="text-white/20" />}
+                                {i > 0 && <ArrowRight size={10} className="text-slate-300" />}
                                 <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: UPLINK_TYPE_META[u.type].color }} />
                               </span>
                             ))}
-                            <span className="text-[10px] text-white/40 ml-1.5">{uplinks.map(u => u.name).join(' → ')}</span>
+                            <span className="text-[10px] text-slate-400 ml-1.5">{uplinks.map(u => u.name).join(' → ')}</span>
                           </span>
                         </td>
                         <td className="px-4 py-3">
@@ -437,15 +437,15 @@ export default function SiteDetailPage() {
                             {mode.label}
                           </span>
                         </td>
-                        <td className="px-4 py-3 text-right font-mono text-xs text-white/50">
+                        <td className="px-4 py-3 text-right font-mono text-xs text-slate-500">
                           {p.minBandwidthMbps || '—'} / {p.maxBandwidthMbps || '—'}
                         </td>
                         <td className="px-6 py-3 text-right">
                           <button
                             onClick={() => setPolicyState(prev => ({ ...prev, [p.id]: !enabled }))}
                             className={`text-[10px] font-bold px-2.5 py-1 rounded-lg transition-all ${
-                              enabled ? 'bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20'
-                                     : 'bg-white/5 text-white/40 hover:bg-white/10'
+                              enabled ? 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100'
+                                     : 'bg-slate-100 text-slate-400 hover:bg-slate-100/80'
                             }`}
                           >
                             {enabled ? 'Active' : 'Paused'}
@@ -472,22 +472,22 @@ export default function SiteDetailPage() {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2.5">
                       <span className="w-2 h-2 rounded-full" style={{ backgroundColor: purposeColor }} />
-                      <p className="text-sm font-bold text-white">{s.name}</p>
+                      <p className="text-sm font-bold text-slate-800">{s.name}</p>
                     </div>
-                    <span className="text-[10px] font-mono text-white/30">VLAN {s.vlan}</span>
+                    <span className="text-[10px] font-mono text-slate-400">VLAN {s.vlan}</span>
                   </div>
-                  <p className="font-mono text-xs text-white/50 bg-black/30 rounded-lg px-3 py-2">{s.cidr}</p>
+                  <p className="font-mono text-xs text-slate-500 bg-slate-50 rounded-lg px-3 py-2">{s.cidr}</p>
                   <div className="grid grid-cols-2 gap-3 mt-4">
-                    <div className="bg-white/[0.03] rounded-lg p-2.5">
-                      <p className="text-[9px] text-white/30 uppercase tracking-wider">Clients</p>
-                      <p className="text-sm font-black text-white">{s.deviceCount}</p>
+                    <div className="bg-teal-50/30 rounded-lg p-2.5">
+                      <p className="text-[9px] text-slate-400 uppercase tracking-wider">Clients</p>
+                      <p className="text-sm font-black text-slate-800">{s.deviceCount}</p>
                     </div>
-                    <div className="bg-white/[0.03] rounded-lg p-2.5">
-                      <p className="text-[9px] text-white/30 uppercase tracking-wider">Bandwidth</p>
-                      <p className="text-sm font-black text-white">{s.bandwidthUtilizationPct}%</p>
+                    <div className="bg-teal-50/30 rounded-lg p-2.5">
+                      <p className="text-[9px] text-slate-400 uppercase tracking-wider">Bandwidth</p>
+                      <p className="text-sm font-black text-slate-800">{s.bandwidthUtilizationPct}%</p>
                     </div>
                   </div>
-                  <div className="h-1.5 rounded-full bg-white/5 overflow-hidden mt-3">
+                  <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden mt-3">
                     <div
                       className="h-full rounded-full"
                       style={{
@@ -505,16 +505,16 @@ export default function SiteDetailPage() {
         {/* ── Devices ── */}
         {tab === 'devices' && (
           <div className="glass-card overflow-hidden">
-            <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-              <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                <Server size={14} className="text-blue-400" /> Devices at {site.code}
+            <div className="px-6 py-4 border-b border-slate-200/50 flex items-center justify-between">
+              <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                <Server size={14} className="text-teal-600" /> Devices at {site.code}
               </h2>
-              <span className="text-[10px] text-white/30">{site.devices.length} devices</span>
+              <span className="text-[10px] text-slate-400">{site.devices.length} devices</span>
             </div>
             <div className="overflow-x-auto">
               <table className="w-full text-sm min-w-[820px]">
                 <thead>
-                  <tr className="text-[10px] text-white/30 uppercase tracking-widest border-b border-white/5">
+                  <tr className="text-[10px] text-slate-400 uppercase tracking-widest border-b border-slate-200/50">
                     <th className="text-left px-6 py-3 font-semibold">Device</th>
                     <th className="text-left px-4 py-3 font-semibold">Role</th>
                     <th className="text-left px-4 py-3 font-semibold">Model</th>
@@ -525,24 +525,24 @@ export default function SiteDetailPage() {
                     <th className="text-right px-6 py-3 font-semibold">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-slate-100">
                   {site.devices.map(d => (
-                    <tr key={d.id} className="hover:bg-white/[0.02] transition-colors">
-                      <td className="px-6 py-3 text-white font-medium">{d.name}</td>
+                    <tr key={d.id} className="hover:bg-teal-50/30 transition-colors">
+                      <td className="px-6 py-3 text-slate-800 font-medium">{d.name}</td>
                       <td className="px-4 py-3">
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white/5 text-white/50 border border-white/10 uppercase">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-500 border border-slate-200/60 uppercase">
                           {d.role}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-xs text-white/60">{d.model}</td>
-                      <td className="px-4 py-3 font-mono text-xs text-white/40">{d.serial}</td>
-                      <td className="px-4 py-3 font-mono text-xs text-white/50">{d.tunnelIp}</td>
-                      <td className="px-4 py-3 text-right font-mono text-xs text-white/50">{fmtUptime(d.uptimeSeconds)}</td>
-                      <td className="px-4 py-3 text-right font-mono text-xs text-white/50">{d.cpuLoad}%</td>
+                      <td className="px-4 py-3 text-xs text-slate-500">{d.model}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-slate-400">{d.serial}</td>
+                      <td className="px-4 py-3 font-mono text-xs text-slate-500">{d.tunnelIp}</td>
+                      <td className="px-4 py-3 text-right font-mono text-xs text-slate-500">{fmtUptime(d.uptimeSeconds)}</td>
+                      <td className="px-4 py-3 text-right font-mono text-xs text-slate-500">{d.cpuLoad}%</td>
                       <td className="px-6 py-3 text-right">
                         <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border uppercase ${
-                          d.status === 'online' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
-                          : 'bg-red-500/10 border-red-500/20 text-red-400'
+                          d.status === 'online' ? 'bg-emerald-50 border-emerald-200 text-emerald-600'
+                          : 'bg-rose-50 border-rose-200 text-rose-500'
                         }`}>
                           {d.status}
                         </span>
@@ -559,39 +559,39 @@ export default function SiteDetailPage() {
         {tab === 'overlay' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="glass-card overflow-hidden">
-              <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between">
-                <h2 className="text-sm font-bold text-white flex items-center gap-2">
+              <div className="px-6 py-4 border-b border-slate-200/50 flex items-center justify-between">
+                <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
                   <Layers size={14} className="text-cyan-400" /> Overlay Peers
                 </h2>
-                <span className="text-[10px] text-white/30">WireGuard</span>
+                <span className="text-[10px] text-slate-400">WireGuard</span>
               </div>
-              <ul className="divide-y divide-white/5">
+              <ul className="divide-y divide-slate-100">
                 {site.overlayPeers.map(p => {
                   const peer = SITES.find(s => s.id === p.siteId);
                   return (
-                    <li key={p.id} className="px-6 py-3.5 hover:bg-white/[0.02] transition-colors">
+                    <li key={p.id} className="px-6 py-3.5 hover:bg-teal-50/30 transition-colors">
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-3 min-w-0">
                           <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${
                             p.status === 'up' ? 'bg-emerald-400' : p.status === 'degraded' ? 'bg-amber-400' : 'bg-red-400'
                           }`} />
                           <div className="min-w-0">
-                            <p className="text-sm text-white truncate flex items-center gap-2">
+                            <p className="text-sm text-slate-800 truncate flex items-center gap-2">
                               {peer?.name ?? p.siteId}
                               {p.isHub && (
-                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-teal-50 text-teal-600 border border-teal-200">
                                   HUB
                                 </span>
                               )}
                             </p>
-                            <p className="text-[10px] text-white/30 font-mono mt-0.5 truncate">
+                            <p className="text-[10px] text-slate-400 font-mono mt-0.5 truncate">
                               {p.publicEndpoint} → {p.tunnelIp}
                             </p>
                           </div>
                         </div>
                         <div className="text-right shrink-0">
-                          <p className="text-xs font-mono text-white/60">{p.roundTripMs} ms</p>
-                          <p className="text-[10px] text-white/30">
+                          <p className="text-xs font-mono text-slate-500">{p.roundTripMs} ms</p>
+                          <p className="text-[10px] text-slate-400">
                             hs {p.lastHandshakeSeconds}s ago
                           </p>
                         </div>
@@ -599,7 +599,7 @@ export default function SiteDetailPage() {
                       {p.allowedNetworks.length > 0 && (
                         <div className="flex flex-wrap gap-1.5 mt-2.5 pl-5">
                           {p.allowedNetworks.map(n => (
-                            <span key={n} className="text-[9px] font-mono text-white/35 bg-white/5 border border-white/10 px-1.5 py-0.5 rounded">
+                            <span key={n} className="text-[9px] font-mono text-slate-400 bg-slate-100 border border-slate-200/60 px-1.5 py-0.5 rounded">
                               {n}
                             </span>
                           ))}
@@ -612,12 +612,12 @@ export default function SiteDetailPage() {
             </div>
 
             <div className="glass-card p-6">
-              <h2 className="text-sm font-bold text-white mb-4 flex items-center gap-2">
-                <Globe2 size={14} className="text-blue-400" /> Transit
+              <h2 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                <Globe2 size={14} className="text-teal-600" /> Transit
               </h2>
               {site.transitFor.length > 0 ? (
                 <>
-                  <p className="text-[11px] text-white/35 mb-3">
+                  <p className="text-[11px] text-slate-400 mb-3">
                     This site routes traffic for {site.transitFor.length} downstream site{site.transitFor.length !== 1 ? 's' : ''}.
                   </p>
                   <div className="space-y-1.5">
@@ -628,18 +628,18 @@ export default function SiteDetailPage() {
                         <Link
                           key={id}
                           href={`/sites/${id}`}
-                          className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-white/[0.04] transition-colors"
-                        >
+                        className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-teal-50/40 transition-colors"
+                      >
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                          <span className="text-xs text-white/60 flex-1 truncate">{child.name}</span>
-                          <span className="text-[10px] font-mono text-white/30">{child.currentMbps} M</span>
+                          <span className="text-xs text-slate-500 flex-1 truncate">{child.name}</span>
+                          <span className="text-[10px] font-mono text-slate-400">{child.currentMbps} M</span>
                         </Link>
                       );
                     })}
                   </div>
                 </>
               ) : (
-                <p className="text-[11px] text-white/30">
+                <p className="text-[11px] text-slate-400">
                   This site is a leaf — it has no downstream transit sites.
                 </p>
               )}

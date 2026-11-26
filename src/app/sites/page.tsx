@@ -15,10 +15,10 @@ import {
 } from '@/lib/network';
 
 const STATUS_META: Record<SiteStatus, { label: string; color: string; dot: string }> = {
-  online:      { label: 'Online',   color: 'text-emerald-400', dot: 'bg-emerald-400' },
-  degraded:    { label: 'Degraded', color: 'text-amber-400',   dot: 'bg-amber-400'   },
-  offline:     { label: 'Offline',  color: 'text-red-400',     dot: 'bg-red-400'     },
-  maintenance: { label: 'Maint.',   color: 'text-white/50',   dot: 'bg-white/40'    },
+  online:      { label: 'Online',   color: 'text-emerald-600', dot: 'bg-emerald-400' },
+  degraded:    { label: 'Degraded', color: 'text-amber-600',   dot: 'bg-amber-400'   },
+  offline:     { label: 'Offline',  color: 'text-rose-500',     dot: 'bg-red-400'     },
+  maintenance: { label: 'Maint.',   color: 'text-slate-400',   dot: 'bg-slate-400'    },
 };
 
 const TEMPLATES = [
@@ -141,22 +141,22 @@ export default function SitesPage() {
         {/* ── Header ── */}
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div className="min-w-0">
-            <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-center gap-2 sm:gap-3">
-              <Building2 className="text-blue-400 shrink-0" size={20} /> Sites & Templates
+            <h1 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight flex items-center gap-2 sm:gap-3">
+              <Building2 className="text-teal-600 shrink-0" size={20} /> Sites & Templates
             </h1>
-            <p className="text-white/40 mt-1 text-sm">
+            <p className="text-slate-400 mt-1 text-sm">
               {SITES.length} sites · {(contract / 1000).toFixed(1)} Gbps contracted · {totalSubscribers().toLocaleString()} subscribers
             </p>
           </div>
 
           <div className="grid grid-cols-3 gap-2 sm:gap-3 w-full sm:w-auto">
             {[
-              { label: 'Sites',   value: SITES.length,                      color: 'text-blue-400'   },
-              { label: 'Circuits', value: uplinks.length,                   color: 'text-purple-400' },
-              { label: 'Degraded', value: SITES.filter(s => s.status !== 'online').length, color: 'text-amber-400' },
+              { label: 'Sites',   value: SITES.length,                      color: 'text-teal-600'   },
+              { label: 'Circuits', value: uplinks.length,                   color: 'text-violet-600' },
+              { label: 'Degraded', value: SITES.filter(s => s.status !== 'online').length, color: 'text-amber-600' },
             ].map(x => (
               <div key={x.label} className="glass-card px-3 sm:px-4 py-2.5 text-center">
-                <p className="text-[9px] text-white/35 uppercase tracking-widest">{x.label}</p>
+                <p className="text-[9px] text-slate-400 uppercase tracking-widest">{x.label}</p>
                 <p className={`text-lg font-black ${x.color}`}>{x.value}</p>
               </div>
             ))}
@@ -170,21 +170,21 @@ export default function SitesPage() {
             {/* Filters */}
             <div className="glass-card p-4 flex flex-wrap items-center gap-3">
               <div className="relative flex-1 min-w-[160px] sm:min-w-[200px] w-full">
-                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/25" />
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-300" />
                 <input
                   value={query}
                   onChange={e => setQuery(e.target.value)}
                   placeholder="Search sites, codes, cities..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-9 pr-3 py-2 text-sm text-white
-                    focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition-all placeholder:text-white/20"
+                  className="w-full bg-slate-100 border border-slate-200/60 rounded-xl pl-9 pr-3 py-2 text-sm text-slate-800
+                    focus:outline-none focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500 transition-all placeholder:text-slate-300"
                 />
               </div>
 
-              <div className="flex items-center gap-1 bg-white/5 border border-white/10 rounded-xl p-1 overflow-x-auto no-scrollbar w-full sm:w-auto">
+              <div className="flex items-center gap-1 bg-slate-100 border border-slate-200/60 rounded-xl p-1 overflow-x-auto no-scrollbar w-full sm:w-auto">
                 <button
                   onClick={() => setRoleFilter('all')}
                   className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all whitespace-nowrap shrink-0 ${
-                    roleFilter === 'all' ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white'
+                    roleFilter === 'all' ? 'bg-slate-100/80 text-slate-800' : 'text-slate-400 hover:text-slate-700'
                   }`}
                 >
                   All
@@ -194,7 +194,7 @@ export default function SitesPage() {
                     key={r}
                     onClick={() => setRoleFilter(r)}
                     className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all whitespace-nowrap shrink-0 ${
-                      roleFilter === r ? 'bg-white/10 text-white' : 'text-white/30 hover:text-white'
+                      roleFilter === r ? 'bg-slate-100/80 text-slate-800' : 'text-slate-400 hover:text-slate-700'
                     }`}
                   >
                     {SITE_ROLE_META[r].label}
@@ -204,7 +204,7 @@ export default function SitesPage() {
 
               <button
                 onClick={toggleAll}
-                className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-xs text-teal-600 hover:text-teal-500 transition-colors"
               >
                 {selected.size === filtered.length && filtered.length > 0 ? 'Deselect all' : 'Select all'}
               </button>
@@ -224,7 +224,7 @@ export default function SitesPage() {
                   <motion.div
                     key={site.id}
                     layout
-                    className={`glass-card p-4 sm:p-5 transition-all ${isChecked ? 'border-blue-500/30 bg-blue-500/[0.04]' : ''}`}
+                    className={`glass-card p-4 sm:p-5 transition-all ${isChecked ? 'border-teal-300 bg-teal-50/40' : ''}`}
                   >
                     <div className="flex items-start justify-between gap-3 mb-4">
                       <div className="flex items-center gap-3 min-w-0">
@@ -232,16 +232,16 @@ export default function SitesPage() {
                           type="checkbox"
                           checked={isChecked}
                           onChange={() => toggle(site.id)}
-                          className="accent-blue-500 shrink-0"
+                          className="accent-teal-500 shrink-0"
                         />
                         <div className="min-w-0">
                           <Link
                             href={`/sites/${site.id}`}
-                            className="text-sm font-bold text-white hover:text-blue-400 transition-colors block truncate"
+                            className="text-sm font-bold text-slate-800 hover:text-teal-600 transition-colors block truncate"
                           >
                             {site.name}
                           </Link>
-                          <p className="text-[11px] text-white/30 font-mono mt-0.5">{site.code}</p>
+                          <p className="text-[11px] text-slate-400 font-mono mt-0.5">{site.code}</p>
                         </div>
                       </div>
                       <span className={`text-[9px] font-bold px-2 py-0.5 rounded-full border shrink-0 ${role.bg} ${role.border} ${role.color}`}>
@@ -255,16 +255,16 @@ export default function SitesPage() {
                         { label: 'Contract', value: `${site.contractedMbps} M`, icon: Network },
                         { label: 'Devices',  value: `${site.devices.length}`, icon: Server },
                       ].map(x => (
-                        <div key={x.label} className="bg-black/20 rounded-lg p-2">
-                          <p className="text-[9px] text-white/30 uppercase tracking-wider flex items-center gap-1">
+                        <div key={x.label} className="bg-slate-50 rounded-lg p-2">
+                          <p className="text-[9px] text-slate-400 uppercase tracking-wider flex items-center gap-1">
                             <x.icon size={9} /> {x.label}
                           </p>
-                          <p className="text-xs font-bold text-white font-mono mt-0.5">{x.value}</p>
+                          <p className="text-xs font-bold text-slate-800 font-mono mt-0.5">{x.value}</p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="h-1.5 rounded-full bg-white/5 overflow-hidden mb-2">
+                    <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden mb-2">
                       <div
                         className="h-full rounded-full"
                         style={{
@@ -279,7 +279,7 @@ export default function SitesPage() {
                         <span className={`w-1.5 h-1.5 rounded-full ${meta.dot}`} />
                         <span className={meta.color}>{meta.label}</span>
                       </span>
-                      <span className="text-[10px] text-white/30 font-mono">
+                      <span className="text-[10px] text-slate-400 font-mono">
                         {utilisation.toFixed(0)}% · {site.uplinks.length} uplinks
                       </span>
                     </div>
@@ -292,10 +292,10 @@ export default function SitesPage() {
           {/* ── Template panel ── */}
           <div className="space-y-5">
             <div className="glass-card p-5">
-              <h2 className="text-sm font-bold text-white mb-1 flex items-center gap-2">
-                <Layers size={14} className="text-purple-400" /> Config Templates
+              <h2 className="text-sm font-bold text-slate-800 mb-1 flex items-center gap-2">
+                <Layers size={14} className="text-violet-600" /> Config Templates
               </h2>
-              <p className="text-[11px] text-white/30 mb-4">
+              <p className="text-[11px] text-slate-400 mb-4">
                 Push a standardised profile to one or many sites.
               </p>
 
@@ -306,19 +306,19 @@ export default function SitesPage() {
                     onClick={() => setTemplateId(t.id)}
                     className={`w-full text-left p-3 rounded-xl border transition-all ${
                       templateId === t.id
-                        ? 'bg-purple-600/15 border-purple-500/30'
-                        : 'bg-white/5 border-white/10 hover:border-white/20'
+                        ? 'bg-violet-50 border-violet-300'
+                        : 'bg-slate-100 border-slate-200/60 hover:border-slate-300'
                     }`}
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <p className={`text-xs font-bold ${templateId === t.id ? 'text-purple-300' : 'text-white/70'}`}>
+                      <p className={`text-xs font-bold ${templateId === t.id ? 'text-violet-600' : 'text-slate-500'}`}>
                         {t.name}
                       </p>
-                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-white/5 text-white/35 border border-white/10 uppercase shrink-0">
+                      <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 border border-slate-200/60 uppercase shrink-0">
                         {t.category}
                       </span>
                     </div>
-                    <p className="text-[10px] text-white/30 mt-1 leading-relaxed">{t.description}</p>
+                    <p className="text-[10px] text-slate-400 mt-1 leading-relaxed">{t.description}</p>
                   </button>
                 ))}
               </div>
@@ -326,23 +326,23 @@ export default function SitesPage() {
 
             {/* Preview + push */}
             <div className="glass-card p-5">
-              <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                <Terminal size={13} className="text-emerald-400" /> RouterOS Preview
+              <h2 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <Terminal size={13} className="text-emerald-600" /> RouterOS Preview
               </h2>
-              <pre className="bg-black/60 border border-white/5 rounded-xl p-4 text-[10.5px] text-emerald-400 font-mono whitespace-pre-wrap break-all leading-relaxed max-h-52 overflow-y-auto">
+              <pre className="bg-slate-800 border border-slate-200/50 rounded-xl p-4 text-[10.5px] text-emerald-400 font-mono whitespace-pre-wrap break-all leading-relaxed max-h-52 overflow-y-auto">
                 {template.commands.join('\n')}
               </pre>
 
-              <div className="mt-4 flex items-center justify-between text-[10px] text-white/30">
+              <div className="mt-4 flex items-center justify-between text-[10px] text-slate-400">
                 <span>
                   Targets:{' '}
-                  <span className="text-white/60 font-bold">{selected.size}</span> site{selected.size !== 1 ? 's' : ''}
+                  <span className="text-slate-500 font-bold">{selected.size}</span> site{selected.size !== 1 ? 's' : ''}
                 </span>
                 <button
                   onClick={() => {
                     navigator.clipboard.writeText(template.commands.join('\n'));
                   }}
-                  className="flex items-center gap-1.5 text-white/40 hover:text-white transition-colors"
+                  className="flex items-center gap-1.5 text-slate-400 hover:text-slate-700 transition-colors"
                 >
                   <Copy size={11} /> Copy
                 </button>
@@ -369,15 +369,15 @@ export default function SitesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   className="glass-card overflow-hidden"
                 >
-                  <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between">
-                    <h2 className="text-sm font-bold text-white flex items-center gap-2">
-                      <ShieldCheck size={13} className="text-emerald-400" /> Push Results
+                  <div className="px-5 py-3 border-b border-slate-200/50 flex items-center justify-between">
+                    <h2 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                      <ShieldCheck size={13} className="text-emerald-600" /> Push Results
                     </h2>
-                    <button onClick={() => setResults(null)} className="text-white/30 hover:text-white transition-colors">
+                    <button onClick={() => setResults(null)} className="text-slate-400 hover:text-slate-700 transition-colors">
                       <XCircle size={14} />
                     </button>
                   </div>
-                  <ul className="divide-y divide-white/5">
+                  <ul className="divide-y divide-slate-100">
                     {results.map((r, i) => (
                       <motion.li
                         key={r.site}
@@ -387,11 +387,11 @@ export default function SitesPage() {
                         className="flex items-center gap-3 px-5 py-2.5"
                       >
                         {r.ok
-                          ? <CheckCircle2 size={12} className="text-emerald-400 shrink-0" />
-                          : <XCircle size={12} className="text-red-400 shrink-0" />}
+                          ? <CheckCircle2 size={12} className="text-emerald-600 shrink-0" />
+                          : <XCircle size={12} className="text-rose-500 shrink-0" />}
                         <div className="flex-1 min-w-0">
-                          <p className="text-xs text-white/70 truncate">{r.site}</p>
-                          <p className="text-[10px] text-white/30">{r.msg}</p>
+                          <p className="text-xs text-slate-500 truncate">{r.site}</p>
+                          <p className="text-[10px] text-slate-400">{r.msg}</p>
                         </div>
                       </motion.li>
                     ))}
@@ -402,8 +402,8 @@ export default function SitesPage() {
 
             {/* Quick links */}
             <div className="glass-card p-5">
-              <h2 className="text-sm font-bold text-white mb-3 flex items-center gap-2">
-                <Globe2 size={13} className="text-blue-400" /> WAN Views
+              <h2 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+                <Globe2 size={13} className="text-teal-600" /> WAN Views
               </h2>
               <div className="space-y-1.5">
                 {[
@@ -413,11 +413,11 @@ export default function SitesPage() {
                   <Link
                     key={l.href}
                     href={l.href}
-                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-white/[0.04] transition-colors group"
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-teal-50/40 transition-colors group"
                   >
-                    <l.icon size={14} className="text-white/30 group-hover:text-blue-400 transition-colors" />
-                    <span className="text-xs text-white/60 group-hover:text-white transition-colors flex-1">{l.label}</span>
-                    <ArrowRight size={12} className="text-white/15 group-hover:text-blue-400 transition-colors" />
+                    <l.icon size={14} className="text-slate-400 group-hover:text-teal-600 transition-colors" />
+                    <span className="text-xs text-slate-500 group-hover:text-slate-800 transition-colors flex-1">{l.label}</span>
+                    <ArrowRight size={12} className="text-slate-300 group-hover:text-teal-600 transition-colors" />
                   </Link>
                 ))}
               </div>

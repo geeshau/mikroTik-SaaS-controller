@@ -266,11 +266,11 @@ export function TopologyMap({
       >
         <defs>
           <radialGradient id="mapGlow" cx="50%" cy="45%" r="70%">
-            <stop offset="0%" stopColor="#1e3a8a" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#09090b" stopOpacity="0" />
+            <stop offset="0%" stopColor="#99f6e4" stopOpacity="0.15" />
+            <stop offset="100%" stopColor="#f0f7f4" stopOpacity="0" />
           </radialGradient>
           <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" strokeOpacity="0.035" strokeWidth="1" />
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#94a3b8" strokeOpacity="0.08" strokeWidth="1" />
           </pattern>
           <filter id="nodeGlow" x="-100%" y="-100%" width="300%" height="300%">
             <feGaussianBlur stdDeviation="4" result="b" />
@@ -366,8 +366,8 @@ export function TopologyMap({
               {/* Hub badge */}
               {isHub && (
                 <g transform={`translate(${p.x + r + 2}, ${p.y - r - 2})`}>
-                  <circle r="8" fill="#3b82f6" fillOpacity="0.2" stroke="#3b82f6" strokeWidth="1" />
-                  <text textAnchor="middle" dy="3" fontSize="9" fill="#93c5fd" fontWeight="700">H</text>
+                  <circle r="8" fill="#14b8a6" fillOpacity="0.2" stroke="#14b8a6" strokeWidth="1" />
+                  <text textAnchor="middle" dy="3" fontSize="9" fill="#0d9488" fontWeight="700">H</text>
                 </g>
               )}
 
@@ -403,7 +403,7 @@ export function TopologyMap({
                 })}
 
               {/* Node */}
-              <circle cx={p.x} cy={p.y} r={r} fill="#09090b" stroke={c} strokeWidth="2" filter={isActive ? 'url(#nodeGlow)' : undefined} />
+              <circle cx={p.x} cy={p.y} r={r} fill="#ffffff" stroke={c} strokeWidth="2" filter={isActive ? 'url(#nodeGlow)' : undefined} />
               <circle cx={p.x} cy={p.y} r={r * 0.42} fill={c} fillOpacity={0.85} />
               {site.status === 'online' && (
                 <circle cx={p.x} cy={p.y} r={r * 0.42} fill={c}>
@@ -417,7 +417,7 @@ export function TopologyMap({
                 textAnchor="middle"
                 fontSize="11"
                 fontWeight="600"
-                fill="#e4e4e7"
+                fill="#334155"
               >
                 {site.code}
               </text>
@@ -426,7 +426,7 @@ export function TopologyMap({
                 y={p.y + r + 28}
                 textAnchor="middle"
                 fontSize="9.5"
-                fill="#71717a"
+                fill="#94a3b8"
               >
                 {site.currentMbps} Mbps
               </text>
@@ -436,10 +436,10 @@ export function TopologyMap({
       </svg>
 
       {/* ── Legend ── */}
-      <div className="absolute bottom-3 left-3 right-3 sm:right-auto flex gap-x-4 gap-y-1.5 rounded-xl border border-white/10 bg-black/70 px-3 py-2 backdrop-blur-md overflow-x-auto no-scrollbar">
-        <span className="text-[10px] font-bold uppercase tracking-widest text-white/30 shrink-0">Circuits</span>
+      <div className="absolute bottom-3 left-3 right-3 sm:right-auto flex gap-x-4 gap-y-1.5 rounded-xl border border-slate-200/60 bg-white/80 px-3 py-2 backdrop-blur-md overflow-x-auto no-scrollbar">
+        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 shrink-0">Circuits</span>
         {(['fiber', '5g', 'lte', 'starlink', 'dsl'] as const).map(t => (
-          <span key={t} className="flex items-center gap-1.5 text-[10px] text-white/50 shrink-0">
+          <span key={t} className="flex items-center gap-1.5 text-[10px] text-slate-500 shrink-0">
             <span
               className="h-0.5 w-4 rounded-full"
               style={{ backgroundColor: uplinkArcColor({ type: t } as Uplink) }}
@@ -449,11 +449,11 @@ export function TopologyMap({
         ))}
       </div>
 
-      <div className="absolute right-3 top-3 rounded-xl border border-white/10 bg-black/70 px-3 py-2 backdrop-blur-md">
-        <p className="text-[10px] font-bold uppercase tracking-widest text-white/30">Fleet</p>
-        <p className="mt-0.5 text-sm font-black text-white">
+      <div className="absolute right-3 top-3 rounded-xl border border-slate-200/60 bg-white/80 px-3 py-2 backdrop-blur-md">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Fleet</p>
+        <p className="mt-0.5 text-sm font-black text-slate-800">
           {visibleSites.length} sites
-          <span className="mx-1.5 text-white/20">·</span>
+          <span className="mx-1.5 text-slate-300">·</span>
           {(totalCapacity / 1000).toFixed(1)} Gbps
         </p>
       </div>

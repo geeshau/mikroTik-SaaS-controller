@@ -28,90 +28,90 @@ export default function ClientPortal() {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-white p-4 sm:p-6 md:p-12 font-sans">
+    <div className="min-h-screen p-4 sm:p-6 md:p-12 font-sans">
       <header className="max-w-4xl mx-auto mb-8 sm:mb-12 text-center">
-        <div className="inline-block p-4 bg-blue-500/10 rounded-full mb-4">
-          <Wifi className="text-blue-500 w-10 h-10 sm:w-12 sm:h-12" />
+        <div className="inline-block p-4 bg-teal-50 rounded-full mb-4">
+          <Wifi className="text-teal-600 w-10 h-10 sm:w-12 sm:h-12" />
         </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight">Your Home Network</h1>
-        <p className="text-white/40 mt-2 text-base sm:text-lg">Manage your Wi-Fi, run speed tests, and control devices.</p>
+        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-800">Your Home Network</h1>
+        <p className="text-slate-400 mt-2 text-base sm:text-lg">Manage your Wi-Fi, run speed tests, and control devices.</p>
       </header>
 
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
         
         {/* Wi-Fi Management Card */}
-        <section className="bg-white/5 border border-white/10 rounded-3xl p-5 sm:p-8 backdrop-blur-xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/20 blur-[100px] rounded-full pointer-events-none" />
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2 sm:gap-3">
-            <Settings className="text-blue-400" />
+        <section className="bg-white/65 border border-white/50 rounded-3xl p-5 sm:p-8 backdrop-blur-xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-teal-400/15 blur-[100px] rounded-full pointer-events-none" />
+          <h2 className="text-xl sm:text-2xl font-bold mb-6 flex items-center gap-2 sm:gap-3 text-slate-800">
+            <Settings className="text-teal-600" />
             Wi-Fi Settings
           </h2>
           
           <div className="space-y-4">
             <div>
-              <label className="block text-sm text-white/40 mb-1 uppercase tracking-wider">Network Name (SSID)</label>
+              <label className="block text-sm text-slate-400 mb-1 uppercase tracking-wider">Network Name (SSID)</label>
               {isEditingWifi ? (
-                <input value={wifiSsid} onChange={e => setWifiSsid(e.target.value)} className="w-full bg-black/50 border border-white/20 rounded-xl p-3 text-white" />
+                <input value={wifiSsid} onChange={e => setWifiSsid(e.target.value)} className="w-full bg-slate-50 border border-slate-200/60 rounded-xl p-3 text-slate-800" />
               ) : (
-                <div className="text-xl font-medium">{wifiSsid}</div>
+                <div className="text-xl font-medium text-slate-800">{wifiSsid}</div>
               )}
             </div>
             <div>
-              <label className="block text-sm text-white/40 mb-1 uppercase tracking-wider">Password</label>
+              <label className="block text-sm text-slate-400 mb-1 uppercase tracking-wider">Password</label>
               {isEditingWifi ? (
-                <input value={wifiPass} onChange={e => setWifiPass(e.target.value)} className="w-full bg-black/50 border border-white/20 rounded-xl p-3 text-white" />
+                <input value={wifiPass} onChange={e => setWifiPass(e.target.value)} className="w-full bg-slate-50 border border-slate-200/60 rounded-xl p-3 text-slate-800" />
               ) : (
-                <div className="text-xl font-medium font-mono text-white/80">••••••••••</div>
+                <div className="text-xl font-medium font-mono text-slate-600">••••••••••</div>
               )}
             </div>
             
             <div className="pt-4">
               {isEditingWifi ? (
                 <div className="flex gap-3">
-                  <button onClick={handleWifiSave} className="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold transition-colors">Save Changes</button>
-                  <button onClick={() => setIsEditingWifi(false)} className="px-6 bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl font-bold transition-colors">Cancel</button>
+                  <button onClick={handleWifiSave} className="flex-1 bg-teal-500 hover:bg-teal-400 text-white py-3 rounded-xl font-bold transition-colors">Save Changes</button>
+                  <button onClick={() => setIsEditingWifi(false)} className="px-6 bg-slate-100 hover:bg-slate-200/80 text-slate-800 py-3 rounded-xl font-bold transition-colors">Cancel</button>
                 </div>
               ) : (
-                <button onClick={() => setIsEditingWifi(true)} className="w-full bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl font-bold transition-colors">Edit Settings</button>
+                <button onClick={() => setIsEditingWifi(true)} className="w-full bg-slate-100 hover:bg-slate-200/80 text-slate-800 py-3 rounded-xl font-bold transition-colors">Edit Settings</button>
               )}
             </div>
           </div>
         </section>
 
         {/* Speed Test Card */}
-        <section className="bg-white/5 border border-white/10 rounded-3xl p-5 sm:p-8 backdrop-blur-xl flex flex-col justify-center items-center text-center">
-          <Gauge className="w-12 h-12 sm:w-16 sm:h-16 text-emerald-400 mb-4" />
-          <h2 className="text-xl sm:text-2xl font-bold mb-2">Network Speed</h2>
-          <p className="text-white/40 mb-6">Test the connection directly from your router to the ISP.</p>
+        <section className="bg-white/65 border border-white/50 rounded-3xl p-5 sm:p-8 backdrop-blur-xl flex flex-col justify-center items-center text-center">
+          <Gauge className="w-12 h-12 sm:w-16 sm:h-16 text-emerald-600 mb-4" />
+          <h2 className="text-xl sm:text-2xl font-bold mb-2 text-slate-800">Network Speed</h2>
+          <p className="text-slate-400 mb-6">Test the connection directly from your router to the ISP.</p>
           <button className="bg-emerald-500 hover:bg-emerald-400 text-black px-8 py-4 rounded-full font-extrabold tracking-wide transition-all shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:shadow-[0_0_50px_rgba(16,185,129,0.5)]">
             RUN SPEED TEST
           </button>
         </section>
 
         {/* Device Management */}
-        <section className="bg-white/5 border border-white/10 rounded-3xl p-5 sm:p-8 backdrop-blur-xl md:col-span-2">
+        <section className="bg-white/65 border border-white/50 rounded-3xl p-5 sm:p-8 backdrop-blur-xl md:col-span-2">
           <div className="flex justify-between items-center mb-6 gap-3 flex-wrap">
-            <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2 sm:gap-3">
-              <Smartphone className="text-purple-400" />
+            <h2 className="text-xl sm:text-2xl font-bold flex items-center gap-2 sm:gap-3 text-slate-800">
+              <Smartphone className="text-violet-600" />
               Connected Devices
             </h2>
-            <span className="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm font-bold">{devices.length} Devices</span>
+            <span className="bg-violet-100 text-violet-600 px-3 py-1 rounded-full text-sm font-bold">{devices.length} Devices</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {devices.map((device) => (
-              <motion.div layout key={device.id} className={`p-5 rounded-2xl border ${device.isBlocked ? 'bg-red-500/5 border-red-500/20' : 'bg-white/5 border-white/10'} flex flex-col justify-between`}>
+              <motion.div layout key={device.id} className={`p-5 rounded-2xl border ${device.isBlocked ? 'bg-rose-50 border-rose-200' : 'bg-white/65 border-white/50'} flex flex-col justify-between`}>
                 <div className="mb-4">
-                  <h3 className={`font-bold text-lg ${device.isBlocked ? 'text-red-300' : 'text-white'}`}>{device.name}</h3>
-                  <p className="text-xs text-white/30 font-mono mt-1">{device.mac}</p>
+                  <h3 className={`font-bold text-lg ${device.isBlocked ? 'text-rose-500' : 'text-slate-800'}`}>{device.name}</h3>
+                  <p className="text-xs text-slate-400 font-mono mt-1">{device.mac}</p>
                 </div>
                 
                 <button
                   onClick={() => togglePause(device.id)}
                   className={`w-full py-2 rounded-lg font-bold flex items-center justify-center gap-2 transition-colors ${
                     device.isBlocked 
-                      ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30' 
-                      : 'bg-white/10 text-white hover:bg-white/20'
+                      ? 'bg-rose-50 text-rose-500 hover:bg-rose-100' 
+                      : 'bg-slate-100 text-slate-800 hover:bg-slate-200/80'
                   }`}
                 >
                   <Power size={16} />
