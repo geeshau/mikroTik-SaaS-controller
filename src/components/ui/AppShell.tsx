@@ -5,9 +5,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   Zap, LayoutGrid, Cpu, GitMerge, Activity,
-  Users, Bell, Search, Shield, ChevronRight,
+  Users, Search, Shield, ChevronRight,
   Globe2, Route, Building2, Menu, X, Radio, ShieldCheck,
 } from 'lucide-react';
+import { PageTransition } from './PageTransition';
+import { ErrorBoundary } from './ErrorBoundary';
+import { ThemeToggle } from './ThemeToggle';
+import { NotificationDropdown } from './NotificationDemo';
 import { SITES } from '@/lib/network';
 
 const NAV = [
@@ -192,18 +196,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
-            <button
-              aria-label="Notifications"
-              className="relative p-2 text-slate-400 hover:text-slate-700 transition-colors"
-            >
-              <Bell size={18} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-400 rounded-full ring-2 ring-white" />
-            </button>
+          <div className="flex items-center gap-1 sm:gap-3 shrink-0">
+            <ThemeToggle />
+            <NotificationDropdown />
           </div>
         </header>
 
-        <main className="flex-1 min-w-0">{children}</main>
+        <main className="flex-1 min-w-0"><ErrorBoundary><PageTransition>{children}</PageTransition></ErrorBoundary></main>
       </div>
     </div>
   );

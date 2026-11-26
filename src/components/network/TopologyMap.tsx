@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   SITES, OVERLAYS, type Site, type Uplink, type SiteStatus,
@@ -200,6 +200,34 @@ export function TopologyMap({
   className = '',
 }: Props) {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [hoveredEdge, setHoveredEdge] = useState<{ from: string; to: string } | null>(null);
+  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
+  const svgRef = useRef<SVGSVGElement>(null);
+
+  // ── Pan / zoom handlers ──────────────────────────────────────────────
+  const handleMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+    if (e.button !== 0) return;
+    setIsDragging(true);
+    setDragStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+  }, [pan]);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+    if (!isDragging) return;
+    setPan({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
+  }, [isDragging, dragStart]);
+
+  const handleMouseUp = useCallback(() => setIsDragging(false), []);
+
+  const handleWheel = useCallback((e: React.WheelEvent<SVGSVGElement>) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    setZoom(z => Math.max(0.5, Math.min(3, z + delta)));
+  }, []);
 
   /** Sites actually drawn — the whole fleet, or a filtered subset. */
   const visibleSites = useMemo(() => {
@@ -256,13 +284,49 @@ export function TopologyMap({
 
   const totalCapacity = visibleSites.reduce((s, site) => s + site.contractedMbps, 0);
 
+  // Compute viewBox string from zoom + pan for the minimap
+  const vbX = -pan.x / zoom;
+  const vbY = -pan.y / zoom;
+  const vbW = W / zoom;
+  const vbH = H / zoom;
+
   return (
     <div className={`relative ${className}`}>
+      {/* ── Zoom controls ── */}
+      <div className="absolute top-3 right-3 flex flex-col gap-1 z-10">
+        <button
+          onClick={() => setZoom(z => Math.min(3, z + 0.2))}
+          className="w-8 h-8 glass-card rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-teal-500/10 text-sm font-bold"
+        >
+          +
+        </button>
+        <button
+          onClick={() => setZoom(z => Math.max(0.5, z - 0.2))}
+          className="w-8 h-8 glass-card rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-teal-500/10 text-sm font-bold"
+        >
+          −
+        </button>
+        <button
+          onClick={() => { setZoom(1); setPan({ x: 0, y: 0 }); }}
+          className="w-8 h-8 glass-card rounded-lg flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-teal-50 dark:hover:bg-teal-500/10 text-[10px] font-bold"
+        >
+          ⟲
+        </button>
+      </div>
+
       <svg
+        ref={svgRef}
         viewBox={`0 0 ${W} ${H}`}
-        className="w-full h-auto select-none"
+        className={`w-full h-auto select-none ${
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
         role="img"
         aria-label="WAN topology map"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onWheel={handleWheel}
       >
         <defs>
           <radialGradient id="mapGlow" cx="50%" cy="45%" r="70%">
@@ -283,6 +347,9 @@ export function TopologyMap({
 
         <rect width={W} height={H} fill="url(#mapGlow)" />
         <rect width={W} height={H} fill="url(#grid)" />
+
+        {/* ── Zoom / pan container ── */}
+        <g transform={`translate(${pan.x}, ${pan.y}) scale(${zoom})`}>
 
         {/* ── Overlay links ── */}
         {edges.map((e, i) => {
@@ -305,6 +372,19 @@ export function TopologyMap({
 
           return (
             <g key={`${e.from}-${e.to}-${i}`} opacity={related ? 1 : 0.12}>
+              {/* Invisible wider hit area for hover */}
+              <path
+                d={`M ${a.x},${a.y} Q ${cx},${cy} ${b.x},${b.y}`}
+                fill="none"
+                stroke="transparent"
+                strokeWidth={12}
+                style={{ cursor: 'pointer' }}
+                onMouseEnter={(ev) => {
+                  setHoveredEdge({ from: e.from, to: e.to });
+                  setTooltipPos({ x: ev.nativeEvent.offsetX, y: ev.nativeEvent.offsetY });
+                }}
+                onMouseLeave={() => setHoveredEdge(null)}
+              />
               <path
                 d={`M ${a.x},${a.y} Q ${cx},${cy} ${b.x},${b.y}`}
                 fill="none"
@@ -312,6 +392,7 @@ export function TopologyMap({
                 strokeOpacity={e.degraded ? 0.25 : 0.3}
                 strokeWidth={1.5}
                 strokeDasharray={e.degraded ? '5 5' : 'none'}
+                pointerEvents="none"
               />
               {/* Animated packet along the link */}
               <motion.circle
@@ -351,16 +432,26 @@ export function TopologyMap({
               key={site.id}
               opacity={dim ? 0.25 : 1}
               style={{ cursor: 'pointer' }}
-              onMouseEnter={() => setHovered(site.id)}
-              onMouseLeave={() => setHovered(null)}
+              onMouseEnter={(e) => {
+                setHovered(site.id);
+                setHoveredNode(site.id);
+                setTooltipPos({ x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY });
+              }}
+              onMouseLeave={() => {
+                setHovered(null);
+                setHoveredNode(null);
+              }}
               onClick={() => onSelectSite?.(site)}
             >
-              {/* Selection halo */}
+              {/* Selection halo — larger ring with glow when selected */}
               {isActive && (
-                <circle cx={p.x} cy={p.y} r={r + 14} fill="none" stroke={c} strokeOpacity="0.4" strokeWidth="1.5">
-                  <animate attributeName="r" values={`${r + 9};${r + 18};${r + 9}`} dur="2s" repeatCount="indefinite" />
-                  <animate attributeName="stroke-opacity" values="0.5;0.05;0.5" dur="2s" repeatCount="indefinite" />
-                </circle>
+                <>
+                  <circle cx={p.x} cy={p.y} r={r + 20} fill="none" stroke={c} strokeOpacity="0.15" strokeWidth="2.5" />
+                  <circle cx={p.x} cy={p.y} r={r + 14} fill="none" stroke={c} strokeOpacity="0.4" strokeWidth="1.5" filter="url(#nodeGlow)">
+                    <animate attributeName="r" values={`${r + 9};${r + 18};${r + 9}`} dur="2s" repeatCount="indefinite" />
+                    <animate attributeName="stroke-opacity" values="0.5;0.05;0.5" dur="2s" repeatCount="indefinite" />
+                  </circle>
+                </>
               )}
 
               {/* Hub badge */}
@@ -433,7 +524,88 @@ export function TopologyMap({
             </g>
           );
         })}
+
+        </g>{/* end zoom/pan container */}
+
+        {/* ── Minimap ── */}
+        <g transform={`translate(${W - 140}, ${H - 100})`}>
+          <rect x={0} y={0} width={120} height={80} rx={6} fill="#f8fafc" fillOpacity={0.85} stroke="#cbd5e1" strokeWidth={0.8} />
+          {/* Full extent */}
+          {visibleSites.map(site => {
+            const p = positions.get(site.id)!;
+            return (
+              <circle
+                key={`mm-${site.id}`}
+                cx={(p.x / W) * 120}
+                cy={(p.y / H) * 80}
+                r={1.8}
+                fill={statusColor(site.status)}
+                fillOpacity={0.7}
+              />
+            );
+          })}
+          {/* Viewport rectangle */}
+          <rect
+            x={Math.max(0, (vbX / W) * 120)}
+            y={Math.max(0, (vbY / H) * 80)}
+            width={Math.min(120, (vbW / W) * 120)}
+            height={Math.min(80, (vbH / H) * 80)}
+            rx={2}
+            fill="#14b8a6"
+            fillOpacity={0.12}
+            stroke="#14b8a6"
+            strokeWidth={1}
+          />
+        </g>
       </svg>
+
+      {/* ── Node tooltip ── */}
+      {hoveredNode && (() => {
+        const site = visibleSites.find(s => s.id === hoveredNode);
+        if (!site) return null;
+        return (
+          <div
+            className="absolute z-20 glass-card rounded-xl px-3 py-2 shadow-xl pointer-events-none text-xs"
+            style={{ left: tooltipPos.x + 12, top: tooltipPos.y - 10, minWidth: 160 }}
+          >
+            <p className="font-bold text-slate-800 dark:text-slate-200">{site.name}</p>
+            <p className="text-slate-500 dark:text-slate-400 capitalize">{site.role} · {site.status}</p>
+            <p className="text-slate-500 dark:text-slate-400">{site.contractedMbps} Mbps contracted</p>
+            <p className="text-slate-500 dark:text-slate-400">{site.uplinks.length} uplink{site.uplinks.length !== 1 ? 's' : ''}</p>
+          </div>
+        );
+      })()}
+
+      {/* ── Edge tooltip ── */}
+      {hoveredEdge && (() => {
+        const fromSite = visibleSites.find(s => s.id === hoveredEdge.from);
+        const toSite = visibleSites.find(s => s.id === hoveredEdge.to);
+        if (!fromSite || !toSite) return null;
+        const link = toSite.uplinks[0];
+        return (
+          <div
+            className="absolute z-20 glass-card rounded-xl px-3 py-2 shadow-xl pointer-events-none text-xs"
+            style={{ left: tooltipPos.x + 12, top: tooltipPos.y - 10, minWidth: 180 }}
+          >
+            <p className="font-bold text-slate-800 dark:text-slate-200">
+              {fromSite.code} ↔ {toSite.code}
+            </p>
+            {link && (
+              <>
+                <p className="text-slate-500 dark:text-slate-400 capitalize">
+                  {link.type} · {link.state}
+                </p>
+                <p className="text-slate-500 dark:text-slate-400">
+                  ↓ {link.downMbps} / ↑ {link.upMbps} Mbps
+                </p>
+              </>
+            )}
+            <p className="text-slate-500 dark:text-slate-400">
+              {toSite.currentMbps} / {toSite.contractedMbps} Mbps utilised
+            </p>
+          </div>
+        );
+      })()}
 
       {/* ── Legend ── */}
       <div className="absolute bottom-3 left-3 right-3 sm:right-auto flex gap-x-4 gap-y-1.5 rounded-xl border border-slate-200/60 bg-white/80 px-3 py-2 backdrop-blur-md overflow-x-auto no-scrollbar">
@@ -449,7 +621,7 @@ export function TopologyMap({
         ))}
       </div>
 
-      <div className="absolute right-3 top-3 rounded-xl border border-slate-200/60 bg-white/80 px-3 py-2 backdrop-blur-md">
+      <div className="absolute right-3 top-32 rounded-xl border border-slate-200/60 bg-white/80 px-3 py-2 backdrop-blur-md">
         <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Fleet</p>
         <p className="mt-0.5 text-sm font-black text-slate-800">
           {visibleSites.length} sites

@@ -8,6 +8,7 @@ import {
   Radio, ShieldCheck, Ban, Ticket,
 } from 'lucide-react';
 import { AppShell } from '@/components/ui/AppShell';
+import { ExportButton } from '@/components/ui/ExportButton';
 
 // ── Mock audit events ───────────────────────────────────────────────────────
 const ACTION_META: Record<string, { icon: React.ElementType; color: string; label: string }> = {
@@ -136,7 +137,24 @@ export default function AuditLogPage() {
             </select>
           </div>
 
-          <span className="ml-auto text-xs text-slate-400 self-center">
+          <ExportButton
+            filename="audit-log"
+            title="Vortex Audit Log"
+            subtitle="All configuration change events"
+            headers={['Time', 'Action', 'Router', 'User', 'Status', 'Detail']}
+            rows={filtered.map(e => [
+              new Date(e.ts).toLocaleString(),
+              ACTION_META[e.action]?.label ?? e.action,
+              e.router,
+              e.user,
+              e.ok ? 'Success' : 'Failed',
+              e.detail,
+            ])}
+            jsonData={filtered}
+            className="ml-auto"
+          />
+
+          <span className="text-xs text-slate-400 self-center">
             {filtered.length} event{filtered.length !== 1 ? 's' : ''}
           </span>
         </div>

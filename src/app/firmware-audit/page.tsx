@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, AlertTriangle, CheckCircle, XCircle, RefreshCw, ChevronDown } from 'lucide-react';
 import { AppShell } from '@/components/ui/AppShell';
+import { ExportButton } from '@/components/ui/ExportButton';
 
 // ── Mock data ───────────────────────────────────────────────────────────────
 const LATEST_STABLE = '7.14.3';
@@ -147,7 +148,24 @@ export default function FirmwareAuditPage() {
             </motion.button>
           )}
 
-          <span className="text-xs text-slate-400 ml-auto">{visible.length} router{visible.length !== 1 ? 's' : ''}</span>
+          <ExportButton
+            filename="firmware-audit"
+            title="Firmware Audit Report"
+            subtitle={`Latest stable: ${LATEST_STABLE}`}
+            headers={['Router ID', 'Name', 'Model', 'Firmware', 'Organization', 'Status']}
+            rows={visible.map(r => [
+              r.id,
+              r.name,
+              r.model,
+              r.firmware,
+              r.org,
+              STATUS_META[classify(r.firmware)].label,
+            ])}
+            jsonData={visible}
+            className="ml-auto"
+          />
+
+          <span className="text-xs text-slate-400">{visible.length} router{visible.length !== 1 ? 's' : ''}</span>
         </div>
 
         {/* Table */}

@@ -9,17 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
     "@supabase/ssr": "^0.10.2",
     "@supabase/supabase-js": "^2.105.1",
     "framer-motion": "^12.38.0",
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.9",
     "lucide-react": "^1.14.0",
     "next": "15.5.28",
     "p-limit": "^7.3.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "routeros-client": "^1.1.1"
+    "routeros-client": "^1.1.1",
+    "sonner": "^2.0.8",
+    "swr": "^2.5.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
